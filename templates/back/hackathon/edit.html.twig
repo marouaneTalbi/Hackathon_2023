@@ -1,0 +1,8 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Modification {{ hackathon.name }}!{% endblock %}
+
+{% block body %}
+    <h1>Modification {{ hackathon.name }}</h1>
+    {% include 'back/hackathon/_form.html.twig' with {'btnValue': 'Modifier'} %}
+{% endblock %}

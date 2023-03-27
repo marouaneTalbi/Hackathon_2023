@@ -1,0 +1,15 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Liste des hachathons!{% endblock %}
+
+{% block body %}
+    {{ hackathon.name|capitalize }}
+    {{ hackathon.description }}
+
+    {% embed "back/_embed/modal.html.twig" %}
+        {% block header %}headerheaderheaderheaderheader{% endblock %}
+        {% block main %}mainmainmainmainmain{% endblock %}
+        {% block action %}actionactionactionactionaction{% endblock %}
+    {% endembed %}
+{% endblock %}
+

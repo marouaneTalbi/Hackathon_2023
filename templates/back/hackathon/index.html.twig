@@ -1,0 +1,30 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Liste des hachathons!{% endblock %}
+
+{% block body %}
+    <form method="POST">
+        <input type="text" value="{{ app.request.request.get('search') }}" name="search" placeholder="Rechercher un hachathon">
+        <select name="year">
+          {% for year in years %}
+            <option value="{{ year.id }}" {% if app.request.request.get('year') == year.id %}selected{% endif %}>{{ year.date }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <br>
+
+    {% for hackathon in hackathons %}
+        {{ hackathon.name }}
+        <a href="{{ path('back_hackathon_show', {'id': hackathon.id}) }}">Voir</a>
+        <a href="{{ path('back_hackathon_edit', {'id': hackathon.id}) }}">Editer</a>
+        <a href="{{ path('back_hackathon_remove', {'id': hackathon.id, 'token': csrf_token('remove' ~ hackathon.id)}) }}">Supprimer</a>
+        <a href="{{ path('back_hackathon_sortable', {'id': hackathon.id, 'position': 'UP'}) }}">UP</a>
+        <a href="{{ path('back_hackathon_sortable', {'id': hackathon.id, 'position': 'DOWN'}) }}">DOWN</a>
+
+        <br>
+    {% else %}
+        Aucun hackathon trouvé.
+    {% endfor %}
+{% endblock %}

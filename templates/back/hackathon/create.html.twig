@@ -1,0 +1,7 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Création d'un hachathon!{% endblock %}
+
+{% block body %}
+    {% include 'back/hackathon/_form.html.twig' with {'btnValue': 'Créer'} %}
+{% endblock %}
