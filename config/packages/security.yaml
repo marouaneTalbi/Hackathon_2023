@@ -33,7 +33,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_COACH }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
     role_hierarchy:
         ROLE_COACH: ROLE_CLIENT
