@@ -1,0 +1,17 @@
+fos_ck_editor:
+    configs:
+        main_config:
+            toolbar: 
+             - { 
+                name: "styles", 
+                items:
+                ["bold", "italic", "link", "bulletedlist", "numberedlist", "image"], 
+                }
+easy_admin:
+    entities:
+        Product:
+            # ...
+            form:
+                fields:
+                    # ...
+                    - { property: 'description', type: 'fos_ckeditor' }
