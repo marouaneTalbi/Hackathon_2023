@@ -8,6 +8,7 @@ use App\Repository\ChatRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\UserRepository;
 use DateTime;
+use DateTimeZone;
 use http\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,7 +23,13 @@ class ConversationController extends AbstractController
     {
         $result = [];
         if ($id === null) {
-            $conversation = $conversationRepository->findBy(['client' => $this->getUser()], ['timestamp' => 'DESC'])[0];
+            $timezone = new DateTimeZone('Europe/Paris');
+            $today = (new DateTime('now', $timezone))->format('Y-m-d');
+            $today = DateTime::createFromFormat('Y-m-d', $today);
+            $conversation = $conversationRepository->findOneBy([
+                'client' => $this->getUser()
+            ], ['timestamp'=>'DESC']);
+            $conversation = $conversation->getTimestamp()->diff($today)->d >= 1 ? new Conversation() : $conversation;
         } else {
             $conversation = $conversationRepository->find($id);
         }

@@ -50,18 +50,18 @@ const sendMessageAdmin = async (message) => {
 const messageContainerEl = document.querySelector(".message-container")
 const conversationId = getIdConversation()
 console.log(conversationId)
-if (conversationId === null){
+if (conversationId === null) {
     listenConversation()
-}
-if (typeof conversationId === "number"){
+} else if (typeof conversationId === "number") {
+    console.log("okk condit")
     listenConversation(conversationId)
-
 }
+
 function listenConversation(val = null) {
-    const id = val !== null && isNaN(val) ? val : ''
+    const id = val !== null ? '/' + val : ''
     let myTemplate = document.querySelector("#template-message")
-    setInterval(function() {
-        fetch('/conversation/listen/' + id)
+    setInterval(function () {
+        fetch('/conversation/listen' + id)
             .then(response => response.json())
             .then(listData => {
                 messageContainerEl.innerHTML = ""
