@@ -1,5 +1,23 @@
-$blue : #8f6afd;
+$blue : rgba(135, 125, 51, 0.35);
 
 body {
     background-color: $blue;
+}
+input{
+    background-color: $blue;
+    color: white;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    width: 100%;
+}
+
+button{
+    background-color: $blue;
+    color: black;
+    border: none;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    width: 100%;
 }

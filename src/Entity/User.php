@@ -122,17 +122,7 @@ class User implements  PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    public function getLastLogin(): ?DateTimeInterface
-    {
-        return $this->lastLogin;
-    }
 
-    public function setLastLogin(?DateTimeInterface $lastLogin): self
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
 
     public function getPassword(): ?string
     {
