@@ -26,7 +26,6 @@
                 <td>{{ content.content }}</td>
                 <td>{{ content.UpdatedAt ? content.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td><img src="/uploads/images/{{ content.image }}" height="50px"></td>
                 <td>{{ content.tags }}</td>
                 <td>
                     <a href="{{ path('back_app_content_show', {'id': content.id}) }}">show</a>

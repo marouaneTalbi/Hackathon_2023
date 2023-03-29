@@ -27,9 +27,6 @@ class Content
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $tags = null;
 
 
@@ -82,21 +79,9 @@ class Content
     public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
-
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getTags(): ?string
     {
@@ -109,4 +94,5 @@ class Content
 
         return $this;
     }
+
 }
