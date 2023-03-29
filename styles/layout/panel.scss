@@ -1,0 +1,11 @@
+.panel {
+    width: 90%;
+    height: 600px;
+    margin-top: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+    padding: 40px 20px 120px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
