@@ -9,6 +9,7 @@ use App\Repository\ContentRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TagRepository;
 use App\Service\PictureService;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,9 @@ class ContentController extends AbstractController
     public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         $imgs = $mediaRepository->findAll();
+
+        
+
         return $this->render('front/content/index.html.twig', [
             'contents' => $contentRepository->findAll(),
             'imgs' => $imgs,
@@ -35,6 +39,7 @@ class ContentController extends AbstractController
     public function advice(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         $contents = $contentRepository->findBy(['type' => 'Conseil']);
+        
         return $this->render('front/content/index.html.twig', [
             'contents' => $contents,
             'tags' => $tagRepository->findAll()
