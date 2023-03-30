@@ -3,5 +3,28 @@
 {% block title %}Test{% endblock %}
 
 {% block body %}
-    <h1>test</h1>
+
+    <section class="global-container">
+            <div class="panel">
+                <h3>Créer un nouveau contenu</h3>
+                <div class="profile-card-container">
+                    <a class="profile-card" href="{{ path('back_choose_content', {'type': "novice"}) }}">
+                        <h4>Commencer avec les outils simplifiés</h4>
+                        <p>Pour les utilisateurs qui ne sont pas familiers avec les outils d’édition ou qui souhaitent créer du contenu rapidement.</p>
+                        <img src="{{ asset('assets/images/profil_novice.png') }}" />
+                    </a>
+                    <a class="profile-card profile-card--pro" href="{{ path('back_choose_content', {'type': "pro"}) }}">
+                        <h4>Commencer avec les outils complets</h4>
+                        <p>
+                            Pour les utilisateurs qui souhaitent avoir une totale liberté de création et 
+                            qui sont familiers avec les outils de design.<br /><br />
+                            Recommandé pour les designer, services de communication et marketing.
+                        </p>
+                        <img src="{{ asset('assets/images/profil_pro.png') }}" />
+                    </a>
+                </div>
+                <p>Vous pourrez modifier ce choix dans vos réglages de profil plus tard.</p>
+            </div>
+        </section>
+        
 {% endblock %}

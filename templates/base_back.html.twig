@@ -14,6 +14,7 @@
         {% endblock %}
     </head>
     <body>
+        {% if app.user %}
         <nav>
             <img class="logo" src="{{ asset('assets/images/logo.svg') }}" />
 
@@ -23,13 +24,16 @@
                 <li><img src="{{ asset('assets/images/comment.svg') }}" /></li>
                 <li><img src="{{ asset('assets/images/settings.svg') }}" /></li>
                 <li><img src="{{ asset('assets/images/add.svg') }}" /></li>
+                <li><img src="{{ asset('assets/images/content.svg') }}" /></li>
             </ul>
 
             <ul class="bottom">
                 <li><img src="{{ asset('assets/images/user.svg') }}" /></li>
-                <li><img src="{{ asset('assets/images/disconnect.svg') }}" /></li>
+                <li><a href="{{ path('app_logout') }}"><img src="{{ asset('assets/images/disconnect.svg') }}" /></a></li>
             </ul>
         </nav>
-        {% block body %}{% endblock %}
+        {% endif %}
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
