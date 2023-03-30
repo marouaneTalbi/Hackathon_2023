@@ -98,7 +98,7 @@ class Content
     }
 
 
-    public function getTags(): ?string
+    public function getTags(): ?array
     {
         return $this->tags;
     }

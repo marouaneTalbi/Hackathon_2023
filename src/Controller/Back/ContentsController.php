@@ -42,8 +42,8 @@ class ContentsController extends AbstractController
         $form->handleRequest($request);
         $content->setCreatedAt(new \DateTimeImmutable());
         if ($form->isSubmitted() && $form->isValid()) {
-            //dd($form->get('tags')->getData());
-            $content->setTags( unserialize($form->get('tags')->getData()) );
+            dd($form->get('tags'));
+            $content->setTags(unserialize($form->get('tags')->getData()) );
 
             // on recupere les images
             $images = $form->get('images')->getData();
