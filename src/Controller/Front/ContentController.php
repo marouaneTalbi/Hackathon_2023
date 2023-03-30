@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/content')]
+
 class ContentController extends AbstractController
 {
-    #[Route('/', name: 'app_content_index', methods: ['GET'])]
+    #[Route('/content', name: 'app_content', methods: ['GET'])]
     public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         $imgs = $mediaRepository->findAll();
@@ -31,7 +31,27 @@ class ContentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_content_show', methods: ['GET'])]
+    #[Route('/advice', name: 'app_advice', methods: ['GET'])]
+    public function advice(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
+    {
+        $contents = $contentRepository->findBy(['type' => 'Conseil']);
+        return $this->render('front/content/index.html.twig', [
+            'contents' => $contents,
+            'tags' => $tagRepository->findAll()
+        ]);
+    }
+
+    #[Route('/discussion', name: 'app_discussion', methods: ['GET'])]
+    public function discussion(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
+    {
+        $contents = $contentRepository->findBy(['type' => 'Discussion']);
+        return $this->render('front/content/index.html.twig', [
+            'contents' => $contents,
+            'tags' => $tagRepository->findAll()
+        ]);
+    }
+
+    #[Route('/content/{id}', name: 'app_content_show', methods: ['GET'])]
     public function show(Content $content, MediaRepository $mediaRepository): Response
     {
         $imgs = $mediaRepository->findBy(["content"=>$content->getId()]);
