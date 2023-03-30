@@ -112,3 +112,16 @@
 
     color: #FFFFFF;
   }
+
+  .tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    & p {
+      border: 1px solid #E5786C;
+      padding: 2px;
+      border-radius: 3px;
+    }
+  }
