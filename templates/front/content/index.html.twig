@@ -3,6 +3,11 @@
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
+
+
+
+
+
     <section class="global-container">
         <div class="panel">
             <header>
@@ -96,4 +101,92 @@
             </div>
         </div>
     <section>
+        <div id="overlay" >
+            <div id="modal" >
+                <div id="modal-content">
+                    <div class="flex_icon_button">
+                        <button class="close-icon" id="close-modal">X</button>
+                    </div>
+                    <h1 class="publicationTitle">Publication</h1>
+                    <div class="container_b">
+                        <div class="container_modal_input">
+                            <label>Nom de l'article :</label>
+                            <input class="inputModalPub" type="text" name="nom" id="nom">
+                        </div>
+                        <div class="container_modal_input">
+                            <label>Nom de l'article :</label>
+                            <input class="inputModalPub" type="text" name="nom" id="nom">
+                        </div>
+
+                        <div class="checkbox_container">
+                            <input type="checkbox" value="Ajouter">
+                            <a>Programmer la publication</a>
+                        </div>
+
+                        <div class="flex_modal_pub">
+                            <button class="buttonModalPub"> -> Publication </button>
+                            <button class="buttonModalPub wihte_background">Enregistrer les brouillons</button>
+                        </div>
+
+                        <div>
+                            <a class="publication_link">Revenir à l'édition</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay2" >
+            <div id="modal2" >
+                <div id="modal-content">
+                    <div class="flex_icon_button">
+                        <button class="close-icon" id="close-modal2">X</button>
+                    </div>
+                    <h1 class="publicationTitle">Êtes vous sûr de vouloir quitter ?</h1>
+
+                    <div>
+                        <p class="sauvegardeParaf">Vous pouvez enregistrer votre *article/tutoriel/etc* et le terminer plus tard.</p>
+                    </div>
+
+                    <div class="flex_modal_pub2">
+                        <button class="buttonModalPub"> -> Sauvegarder </button>
+                    </div>
+
+                    <div>
+                        <a class="publication_link">Quitter sans sauvegarder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     {#   <button class="modalButton" id="open-modal">open</button>
+        <button class="modalButton" style="background-color: red" id="open-modal2">open</button>
+#}
+        <script>
+            const overlay = document.getElementById('overlay');
+            const modal = document.getElementById('modal');
+            const closeModal = document.getElementById('close-modal');
+            document.getElementById('open-modal').addEventListener('click', function() {
+                overlay.style.display = 'block';
+                modal.style.display = 'block';
+            });
+            closeModal.addEventListener('click', function() {
+                overlay.style.display = 'none';
+                modal.style.display = 'none';
+            });
+
+            const overlay2 = document.getElementById('overlay2');
+            const modal2 = document.getElementById('modal2');
+            const closeModal2 = document.getElementById('close-modal2');
+            document.getElementById('open-modal2').addEventListener('click', function() {
+                overlay2.style.display = 'block';
+                modal2.style.display = 'block';
+            });
+            closeModal2.addEventListener('click', function() {
+                overlay2.style.display = 'none';
+                modal2.style.display = 'none';
+            });
+
+        </script>
 {% endblock %}
