@@ -13,14 +13,14 @@ class PictureService{
         $this->params = $params;
     }
 
-    public function add(UploadedFile $picture, SluggerInterface $slugger)
+    public function add(UploadedFile $picture, SluggerInterface $slugger, $directory)
     {
         $originalFilename = $picture;
         $safeFilename = $slugger->slug($originalFilename);
         $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
         try {
             $picture->move(
-                $this->params->get('images_directory'),
+                $this->params->get($directory),
                 $newFilename
             );
         } catch (FileException $e) {

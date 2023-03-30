@@ -29,7 +29,9 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ content.image }}</td>
+                {% for img in imgs %}
+                    <td>{{ img.media_url }}</td>
+                {% endfor %}
             </tr>
             <tr>
                 <th>Tags</th>

@@ -41,21 +41,21 @@ class ContentsController extends AbstractController
             // on recupere les images
             $images = $form->get('images')->getData();
             foreach($images as $image){
-                $fichier = $pictureService->add($image,$slugger);
+                $fichier = $pictureService->add($image,$slugger,'images_directory');
                 $img = new Media();
                 $img->setMediaUrl($fichier);
                 $img->setContent($content);
-                $img->getTypeMedia('Image');
+                $img->setTypeMedia('Image');
                 $mediaRepository->save($img);
             }
             // on recupere la video
             $videos = $form->get('videos')->getData();
             foreach($videos as $video){
-                $fichier_2 = $pictureService->add($video,$slugger);
+                $fichier_2 = $pictureService->add($video,$slugger,'videos_directory');
                 $vd = new Media();
                 $vd->setMediaUrl($fichier_2);
                 $vd->setContent($content);
-                $vd->getTypeMedia('Video');
+                $vd->setTypeMedia('Video');
                 $mediaRepository->save($vd);
             }
             $contentRepository->save($content, true);
@@ -69,10 +69,12 @@ class ContentsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_content_show', methods: ['GET'])]
-    public function show(Content $content): Response
+    public function show(Content $content, MediaRepository $mediaRepository): Response
     {
+        $imgs = $mediaRepository->findBy(["content"=>$content->getId()]);
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
+            'imgs' => $imgs,
         ]);
     }
 
