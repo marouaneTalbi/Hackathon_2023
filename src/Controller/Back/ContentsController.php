@@ -122,12 +122,16 @@ class ContentsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_content_delete', methods: ['POST'])]
-    public function delete(Request $request, Content $content, ContentRepository $contentRepository): Response
+    public function delete(Request $request, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository): Response
     {
+        $medias = $mediaRepository->findBy(["content"=>$content->getId()]);
+        foreach($medias as $media) {
+            $mediaRepository->remove($media);
+        }
         if ($this->isCsrfTokenValid('delete'.$content->getId(), $request->request->get('_token'))) {
             $contentRepository->remove($content, true);
         }
 
-        return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_app_content_index', [], Response::HTTP_SEE_OTHER);
     }
 }
