@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base_back.html.twig' %}
 
 {% block title %}Contenu{% endblock %}
@@ -97,3 +98,47 @@
         </div>
     <section>
 {% endblock %}
+=======
+<!DOCTYPE html>
+
+<title>Content index</title>
+
+{% block body %}
+    <h1>Content index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>UpdatedAt</th>
+                <th>CreatedAt</th>
+                <th>Image</th>
+                <th>Type de publication</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for content in contents %}
+            <tr>
+                <td>{{ content.id }}</td>
+                <td>{{ content.title }}</td>
+                <td>{{ content.content }}</td>
+                <td>{{ content.UpdatedAt ? content.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ content.tags }}</td>
+                <td>
+                    <a href="{{ path('front_app_content_show', {'id': content.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+>>>>>>> dfed68bf966065d6ec0dc33289d4cc14637f97b3

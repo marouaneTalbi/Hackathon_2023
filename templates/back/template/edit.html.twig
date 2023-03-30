@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Template</title>
+
+{% block body %}
+    <h1>Edit Template</h1>
+
+    {{ include('back/template/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('back_app_template_index') }}">back to list</a>
+
+    {{ include('back/template/_delete_form.html.twig') }}
+{% endblock %}

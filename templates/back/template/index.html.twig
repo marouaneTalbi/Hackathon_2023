@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<title>Template index</title>
+
+{% block body %}
+    <h1>Template index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for template in templates %}
+            <tr>
+                <td>{{ template.id }}</td>
+                <td>{{ template.image }}</td>
+                <td>{{ template.content }}</td>
+                <td>
+                    <a href="{{ path('back_app_template_show', {'id': template.id}) }}">show</a>
+                    <a href="{{ path('back_app_template_edit', {'id': template.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('back_app_template_new') }}">Create new</a>
+{% endblock %}
