@@ -28,14 +28,16 @@ class Content
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $tags = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tag;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $tags = [];
 
     public function __construct()
     {
@@ -103,7 +105,7 @@ class Content
 
     public function setTags(?string $tags): self
     {
-        $this->tags = $tags;
+        $this->tags =  $tags;
 
         return $this;
     }

@@ -9,6 +9,8 @@ use App\Repository\ContentRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TagRepository;
 use App\Service\PictureService;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,21 +38,13 @@ class ContentsController extends AbstractController
     public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService, TagRepository $tagRepository): Response
     {
         $content = new Content();
-        $tags = $tagRepository->findAll();
-        $tagChoices = [];
-        foreach ($tags as $tag) {
-            $tagChoices[$tag->getName()] = $tag->getId();
-        }
         $form = $this->createForm(ContentType::class, $content);
-        $form->add('tags', ChoiceType::class, [
-            'label' => 'Tags',
-            'choices' => $tagChoices,
-            'placeholder' => 'Tags',
-        ]);
         $form->handleRequest($request);
         $content->setCreatedAt(new \DateTimeImmutable());
-
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($form->get('tags')->getData());
+            $content->setTags( unserialize($form->get('tags')->getData()) );
+
             // on recupere les images
             $images = $form->get('images')->getData();
             foreach($images as $image){
@@ -98,7 +92,7 @@ class ContentsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_content_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,PictureService $pictureService, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request,PictureService $pictureService, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository, SluggerInterface $slugger, TagRepository $tagRepository): Response
     {
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
@@ -110,7 +104,6 @@ class ContentsController extends AbstractController
             foreach ($imgs as $img) {
                 $mediaRepository->remove($img, true);
                 $fleSystem->remove($img->getMediaUrl());
-
             }
 
             $images = $form->get('images')->getData();

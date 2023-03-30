@@ -30,7 +30,7 @@
             <tr>
                 <th>Image</th>
                 {% for img in imgs %}
-                    <td>{{ img.id }}</td>
+                    <td><img src="{{ asset('uploads/images/' ~ img) }}" alt="" width="100px"></td>
                 {% endfor %}
             </tr>
             <tr>

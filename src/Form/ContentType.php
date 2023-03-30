@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Content;
+use App\Entity\Tag;
+use App\Repository\TagRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,6 +16,8 @@ class ContentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+
         $builder
             ->add('title')
             ->add('content')
@@ -34,18 +39,22 @@ class ContentType extends AbstractType
                 ],
                 'placeholder' => 'Type de publication',
             ])
-            /*->add('tags', ChoiceType::class, [
-                'label' => 'Tags',
-                'choices' => [
-                    'tag 1' => 'tag 1',
-                    'tag 2' => 'tag 2',
-                    'tag 3' => 'tag 3',
-                ],
-                'placeholder' => 'Tags',
-            ])*/
 
+           ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
+                'query_builder' => function (TagRepository $tagRepository) {
+                   return $tagRepository->createQueryBuilder('t')
+                       ->orderBy('t.name', 'ASC');
+                },
+            ])
         ;
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
