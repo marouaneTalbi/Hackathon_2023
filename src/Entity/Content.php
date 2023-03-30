@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,17 @@ class Content
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tags = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
+    private Collection $tag;
+
+    public function __construct()
+    {
+        $this->tag = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -91,6 +104,42 @@ class Content
     public function setTags(?string $tags): self
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTag(): Collection
+    {
+        return $this->tag;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tag->contains($tag)) {
+            $this->tag->add($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tag->removeElement($tag);
 
         return $this;
     }

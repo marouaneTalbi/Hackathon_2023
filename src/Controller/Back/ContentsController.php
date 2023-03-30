@@ -6,8 +6,8 @@ use App\Entity\Content;
 use App\Entity\Media;
 use App\Form\ContentType;
 use App\Repository\ContentRepository;
-use App\Repository\ContentTypeRepository;
 use App\Repository\MediaRepository;
+use App\Repository\TagRepository;
 use App\Service\PictureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 #[Route('/content')]
 class ContentsController extends AbstractController
@@ -31,10 +32,20 @@ class ContentsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_content_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService): Response
+    public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService, TagRepository $tagRepository): Response
     {
         $content = new Content();
+        $tags = $tagRepository->findAll();
+        $tagChoices = [];
+        foreach ($tags as $tag) {
+            $tagChoices[$tag->getName()] = $tag->getId();
+        }
         $form = $this->createForm(ContentType::class, $content);
+        $form->add('tags', ChoiceType::class, [
+            'label' => 'Tags',
+            'choices' => $tagChoices,
+            'placeholder' => 'Tags',
+        ]);
         $form->handleRequest($request);
         $content->setCreatedAt(new \DateTimeImmutable());
         if ($form->isSubmitted() && $form->isValid()) {
