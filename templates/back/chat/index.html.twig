@@ -1,0 +1,7 @@
+{% for chat in chats %}
+    <p>{{ chat.client.lastname }} | {{ chat.client.lastname }} | {{ chat.timestamp|date('Y-m-d H:i:s') }}</p>
+    <p>{{ chat.text }}</p>
+    <a href={{ path('back_app_chat_show', {'id': chat.id}) }}>lien pour demarer la conversation</a>
+
+
+{% endfor %}

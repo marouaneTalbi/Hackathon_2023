@@ -25,10 +25,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class ContentsController extends AbstractController
 {
     #[Route('/', name: 'app_content_index', methods: ['GET'])]
-    public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository): Response
+    public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         return $this->render('back/content/index.html.twig', [
-            'contents' => $contentRepository->findAll()
+            'contents' => $contentRepository->findAll(),
+            'tags' => $tagRepository->findAll()
         ]);
     }
 
@@ -78,7 +79,7 @@ class ContentsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_content_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,PictureService $pictureService, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository, SluggerInterface $slugger, TagRepository $tagRepository): Response
+    public function edit(Request $request, PictureService $pictureService, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository, SluggerInterface $slugger, TagRepository $tagRepository): Response
     {
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
