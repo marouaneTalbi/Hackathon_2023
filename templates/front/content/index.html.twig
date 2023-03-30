@@ -1,52 +1,8 @@
-<!DOCTYPE html>
-
-<title>Content index</title>
-
-{% block body %}
-    <h1>Content index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>UpdatedAt</th>
-                <th>CreatedAt</th>
-                <th>Image</th>
-                <th>Type de publication</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for content in contents %}
-            <tr>
-                <td>{{ content.id }}</td>
-                <td>{{ content.title }}</td>
-                <td>{{ content.content }}</td>
-                <td>{{ content.UpdatedAt ? content.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ content.tags }}</td>
-                <td>
-                    <a href="{{ path('front_app_content_show', {'id': content.id}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-{% endblock %}
-
 {% extends 'base_back.html.twig' %}
 
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
-    
     <section class="global-container">
         <div class="panel">
 
@@ -67,13 +23,15 @@
                             <div class="modal-body">
                                 <p>Type de contenus</p>
                                 <div class="tags">
-                                
+                                    <div></div>
                                 </div>
                             </div>
                             <div class="modal-body">
                                 <p>Mots clefs</p>
                                 <div class="tags">
-                                
+                                    {% for tag in tags %}
+                                        <p>{{tag.name}}</p>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <button class="validate">Valider</button>
@@ -88,90 +46,37 @@
                 </div>
             </header>
             <div class="content-card-container">
+            {% for content in contents %}
                 <div class="content-card">
                     <div class="left">
                         <div class="top">
-                            <h2>Titre de l'articlee eee eeee eee</h2>
-                            <time>29 mars 20223</time>
+                            <h2>{{ content.title }}</h2>
+                            <time>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                             <div class="tags">
                                 <div class="tag">Hospitalisation</div>
                                 <div class="tag">Pédiatrie</div>
                             </div>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit lorem lorem, sit amet cursus eros ullamcorper vel. Fusce vitae felis et magna ullamcorper rutrum nec vel lacus. Duis quis.</p>
+                        <p>{{ content.content }}</p>
                     </div>
                     <div class="right">
-                    
+                    {% for media in content.medias.toArray %}
+                        {% if media.type == "Image" %}
+                            <td>
+                                <img src="{{ asset('uploads/images/' ~ media.url) }}" alt="" height="100px" width="100px">
+                            </td>
+                        {% elseif media.type == "Video" %}
+                            <td>
+                                <video src="{{ asset('uploads/images/' ~ media.url) }}"></video>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
                     </div>
                 </div>
-                <div class="content-card">
-                    <div class="left">
-                        <div class="top">
-                            <h2>Titre de l'articlee eee eeee eee</h2>
-                            <time>29 mars 20223</time>
-                            <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit lorem lorem, sit amet cursus eros ullamcorper vel. Fusce vitae felis et magna ullamcorper rutrum nec vel lacus. Duis quis.</p>
-                    </div>
-                    <div class="right">
-                    
-                    </div>
-                </div>
-                <div class="content-card">
-                    <div class="left">
-                        <div class="top">
-                            <h2>Titre de l'articlee eee eeee eee</h2>
-                            <time>29 mars 20223</time>
-                            <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit lorem lorem, sit amet cursus eros ullamcorper vel. Fusce vitae felis et magna ullamcorper rutrum nec vel lacus. Duis quis.</p>
-                    </div>
-                    <div class="right">
-                    
-                    </div>
-                </div>
-                <div class="content-card">
-                    <div class="left">
-                        <div class="top">
-                            <h2>Titre de l'articlee eee eeee eee</h2>
-                            <time>29 mars 20223</time>
-                            <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit lorem lorem, sit amet cursus eros ullamcorper vel. Fusce vitae felis et magna ullamcorper rutrum nec vel lacus. Duis quis.</p>
-                    </div>
-                    <div class="right">
-                    
-                    </div>
-                </div>
-                <div class="content-card">
-                    <div class="left">
-                        <div class="top">
-                            <h2>Titre de l'articlee eee eeee eee</h2>
-                            <time>29 mars 20223</time>
-                            <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit lorem lorem, sit amet cursus eros ullamcorper vel. Fusce vitae felis et magna ullamcorper rutrum nec vel lacus. Duis quis.</p>
-                    </div>
-                    <div class="right">
-                    
-                    </div>
-                </div>
+            {% endfor %}
             </div>
         </div>
     <section>
-<<<<<<< HEAD
     <script>
    // Sélectionnez le bouton qui ouvre la modal
 const openButton = document.getElementById("openButton");
@@ -207,6 +112,5 @@ window.addEventListener("keydown", function(event) {
 });
 
 </script>
-=======
->>>>>>> origin/develop
+
 {% endblock %}

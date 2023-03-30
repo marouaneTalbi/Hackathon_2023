@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Form\ContentType;
 use App\Repository\ContentRepository;
 use App\Repository\MediaRepository;
+use App\Repository\TagRepository;
 use App\Service\PictureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +21,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ContentController extends AbstractController
 {
     #[Route('/', name: 'app_content_index', methods: ['GET'])]
-    public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository): Response
+    public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         $imgs = $mediaRepository->findAll();
         return $this->render('front/content/index.html.twig', [
             'contents' => $contentRepository->findAll(),
             'imgs' => $imgs,
+            'tags' => $tagRepository->findAll()
         ]);
     }
 
