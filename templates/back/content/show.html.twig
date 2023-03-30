@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<title>Content</title>
+
+{% block body %}
+    <h1>Content</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ content.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ content.title }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ content.content }}</td>
+        </tr>
+        <tr>
+            <th>CreatedAt</th>
+            <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+
+        <tr>
+            <th>Media</th>
+            {% for media in content.medias.toArray %}
+                {% if media.type == "Image" %}
+                    <td>
+                        <img src="{{ asset('uploads/images/' ~ media.url) }}" alt="" height="100px" width="100px">
+                    </td>
+                {% elseif media.type == "Video" %}
+                    <td>
+                        <video src="{{ asset('uploads/images/' ~ media.url) }}"></video>
+                    </td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Type de publication</th>
+            <td>{{ content.type }}</td>
+        </tr>
+        <tr>
+            <th>Tags</th>
+            <td>
+                {% for tag in content.tags.toArray %}
+                    {{ tag.getName }}
+                {% endfor %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('back_app_content_index') }}">back to list</a>
+
+    <a href="{{ path('back_app_content_edit', {'id': content.id}) }}">edit</a>
+
+    {{ include('back/content/_delete_form.html.twig') }}
+{% endblock %}

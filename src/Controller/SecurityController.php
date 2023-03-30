@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Form\EditProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use App\Service\Email;
+use App\Servicee\Email;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
