@@ -1,0 +1,59 @@
+.card-container-top, .card-container-bottom {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    & .card {
+        background: linear-gradient(180deg, #FFFFFF 41.94%, rgba(117, 163, 227, 0.6) 124.91%);
+        box-shadow: 0px 2px 4px 2px rgba(23, 43, 77, 0.08);
+        border-radius: 22px;
+        height: 200px;
+        width: 44%;
+        position: relative;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        cursor: pointer;
+
+        &--small {
+            width: 27.3%;
+            height: 130px;
+            background: linear-gradient(180deg, #FFFFFF 41.94%, rgba(110, 178, 191, 0.6) 124.91%);
+        }
+
+        & h4 {
+            font-family: 'Prompt';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 27px;
+            color: #5D738D;
+        }
+
+        & .icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        & .image {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 40px;
+            right: 50px;
+
+            &--interview {
+                height: 100px;
+                width: 160px;
+                top: 60px;
+            }
+
+            &--tutorial {
+                width: 270px;
+                height: 150px;
+                top: 50px;
+            }
+        }
+    }
+}

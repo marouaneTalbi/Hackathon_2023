@@ -1,0 +1,40 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Choisi ton action{% endblock %}
+
+{% block body %}
+
+    <section class="global-container">
+            <div class="panel">
+                <h3>Créer un nouveau contenu</h3>
+                <div class="card-container-top">
+                <div class="card">
+                        <h4>Créer un nouvel article</h4>
+                        <img class="icon" src="{{ asset('assets/images/article-logo.svg') }}" />
+                        <img class="image" src="{{ asset('assets/images/article.png') }}" />
+                    </div>
+                    <div class="card">
+                        <h4>Créer un nouveau tutoriel</h4>
+                        <img class="icon" src="{{ asset('assets/images/step by step 1.svg') }}" />
+                        <img class="image image--tutorial" src="{{ asset('assets/images/webinar.png') }}" />
+                    </div>
+                </div>
+                <div class="card-container-bottom">
+                <div class="card card--small">
+                        <h4>Interview</h4>
+                        <img class="image image--interview" src="{{ asset('assets/images/interview.png') }}" />
+                    </div>
+                    <div class="card card--small">
+                        <h4>Créer une discussion</h4>
+                        <img class="image image--interview" src="{{ asset('assets/images/forum.png') }}" />
+                    </div>
+                    <div class="card card--small">
+                        <h4>Webinar</h4>
+                        <img class="icon" src="{{ asset('assets/images/webinar.svg') }}" />
+                        <img class="image image--interview" src="{{ asset('assets/images/webinar.png') }}" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+{% endblock %}

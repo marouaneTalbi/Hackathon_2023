@@ -36,8 +36,8 @@ security:
         - { path: ^/, roles: PUBLIC_ACCESS }
 
     role_hierarchy:
-        ROLE_COACH: ROLE_CLIENT
-        ROLE_ADMIN: ROLE_COACH
+        ROLE_ADMIN: ROLE_PRO
+        ROLE_PRO: ROLE_NOVICE
 
 when@test:
     security:

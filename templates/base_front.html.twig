@@ -13,12 +13,25 @@
         {% endblock %}
     </head>
     <body>
+    {% if app.user %}
         <nav>
+            <img class="logo" src="{{ asset('assets/images/logo.svg') }}" />
+
             <ul>
-                <li><a href="{{ path('front_default_index') }}">Accueil</a></li>
-                {% if (is_granted('ROLE_ADMIN')) %} <li><a href="{{ path('back_default_index') }}">Panel d'admin</a></li>{% endif %}
+                <li><img src="{{ asset('assets/images/data.svg') }}" /></li>
+                <li><img src="{{ asset('assets/images/calendar.svg') }}" /></li>
+                <li><img src="{{ asset('assets/images/comment.svg') }}" /></li>
+                <li><img src="{{ asset('assets/images/settings.svg') }}" /></li>
+                <li><img src="{{ asset('assets/images/add.svg') }}" /></li>
+            </ul>
+
+            <ul class="bottom">
+                <li><img src="{{ asset('assets/images/user.svg') }}" /></li>
+                <li><a href="{{ path('app_logout') }}"><img src="{{ asset('assets/images/disconnect.svg') }}" /></a></li>
             </ul>
         </nav>
+    {% endif %}
         {% block body %}{% endblock %}
+        
     </body>
 </html>
