@@ -3,14 +3,46 @@
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
+    
     <section class="global-container">
         <div class="panel">
+
             <header>
                 <ul>
                     <li>Contenus généraux</li>
                     <li>Nos conseils</li>
                     <li>Discusssions</li>
+
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <div class="header">
+                                <h4 class="modal-title">Filtrer les contenus</h4>
+                                <div class="close">
+                                    <img class="logo" src="{{ asset('assets/images/filter red.svg') }}" />
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <p>Type de contenus</p>
+                                <div class="tags">
+                                
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <p>Mots clefs</p>
+                                <div class="tags">
+                                
+                                </div>
+                            </div>
+                            <button class="validate">Valider</button>
+                        </div>
+                    </div>
                 </ul>
+                <div class="filter" id="openButton">
+                    <p>Trier par<img id="openButton" src="{{ asset('assets/images/arrow.svg') }}" /></p>
+                    <div class="logo-container" class="close">
+                        <img class="logo" src="{{ asset('assets/images/filter.svg') }}" />
+                    </div>
+                </div>
             </header>
             <div class="content-card-container">
                 <div class="content-card">
@@ -96,4 +128,39 @@
             </div>
         </div>
     <section>
+    <script>
+   // Sélectionnez le bouton qui ouvre la modal
+const openButton = document.getElementById("openButton");
+
+// Sélectionnez la modal
+const modal = document.getElementById("myModal");
+
+// Sélectionnez le bouton de fermeture
+const closeButton = document.querySelector(".close");
+
+// Lorsque l'utilisateur clique sur le bouton d'ouverture, afficher la modal
+openButton.addEventListener("click", function() {
+  modal.style.display = "block";
+});
+
+// Lorsque l'utilisateur clique sur le bouton de fermeture, masquer la modal
+closeButton.addEventListener("click", function() {
+  modal.style.display = "none";
+});
+
+// Lorsque l'utilisateur clique en dehors de la modal, masquer la modal
+window.addEventListener("click", function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});
+
+// Lorsque l'utilisateur appuie sur la touche "Escape", masquer la modal
+window.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    modal.style.display = "none";
+  }
+});
+
+</script>
 {% endblock %}

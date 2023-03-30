@@ -1,0 +1,114 @@
+/* Style de la modal */
+.modal {
+    display: none; /* cachée par défaut */
+    position: fixed; /* position fixe pour rester au-dessus du contenu */
+    z-index: 1; /* mettre la modal au-dessus de tout le contenu */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* pour permettre le défilement si le contenu de la modal est trop grand */
+    background-color: rgba(0, 0, 0, 0.4); /* fond semi-transparent */
+
+    & h4 {
+        font-family: 'Prompt';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        color: #E5786C;
+    }
+
+    & p {
+        font-family: 'Prompt';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        color: #E5786C;
+    }
+  }
+  
+  /* Style du contenu de la modal */
+  .modal-content {
+    margin: 10% auto; /* centrer la modal à la fois verticalement et horizontalement */
+    padding: 40px;
+    width: 35%; /* largeur de la modal */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #FFFFFF;
+    /* shadow articles */
+
+    box-shadow: 0px 2px 4px 2px #CDD3DB;
+    border-radius: 22px;
+
+    & .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & .close {
+            border: 1px solid #E5786C;
+            width: 40px;
+            height: 40px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+  }
+  
+  /* Style du bouton de fermeture */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  /* Style du bouton de fermeture au survol */
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Style du titre de la modal */
+  .modal-title {
+    margin-top: 0;
+  }
+  
+  /* Style du pied de page de la modal */
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  /* Style des boutons du pied de page */
+  .modal-footer button {
+    margin-left: 10px;
+  }
+  
+  .validate {
+    background: #E5786C;
+    border: 1px solid #AB494C;
+    width: 140px;
+    height: 30px;
+    box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+    border-radius: 4px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+
+
+    /* Neutral/Light/N100 */
+
+    color: #FFFFFF;
+  }
