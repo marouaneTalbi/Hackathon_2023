@@ -13,53 +13,52 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?content $content = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $type_media = null;
+    public ?string $url = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $media_url = null;
+    #[ORM\ManyToOne(inversedBy: 'medias')]
+    private ?Content $content = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getContent(): ?content
-    {
-        return $this->content;
-    }
-
-    public function setContent(?content $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
     public function getTypeMedia(): ?string
     {
-        return $this->type_media;
+        return $this->type;
     }
 
-    public function setTypeMedia(?string $type_media): self
+    public function setTypeMedia(?string $type): self
     {
-        $this->type_media = $type_media;
+        $this->type = $type;
 
         return $this;
     }
 
     public function getMediaUrl(): ?string
     {
-        return $this->media_url;
+        return $this->url;
     }
 
-    public function setMediaUrl(?string $media_url): self
+    public function setMediaUrl(?string $url): self
     {
-        $this->media_url = $media_url;
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getContent(): ?Content
+    {
+        return $this->content;
+    }
+
+    public function setContent(?Content $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }

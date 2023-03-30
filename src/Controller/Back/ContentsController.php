@@ -27,10 +27,8 @@ class ContentsController extends AbstractController
     #[Route('/', name: 'app_content_index', methods: ['GET'])]
     public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository): Response
     {
-        $imgs = $mediaRepository->findAll();
         return $this->render('back/content/index.html.twig', [
-            'contents' => $contentRepository->findAll(),
-            'imgs' => $imgs,
+            'contents' => $contentRepository->findAll()
         ]);
     }
 
@@ -42,26 +40,22 @@ class ContentsController extends AbstractController
         $form->handleRequest($request);
         $content->setCreatedAt(new \DateTimeImmutable());
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->get('tags'));
-            $content->setTags(unserialize($form->get('tags')->getData()) );
-
-            // on recupere les images
             $images = $form->get('images')->getData();
             foreach($images as $image){
                 $fichier = $pictureService->add($image,$slugger,'images_directory');
                 $img = new Media();
                 $img->setMediaUrl($fichier);
-                $img->setContent($content);
+                $content->addMedia($img);
                 $img->setTypeMedia('Image');
                 $mediaRepository->save($img);
             }
-            // on recupere la video
+
             $videos = $form->get('videos')->getData();
             foreach($videos as $video){
                 $fichier_2 = $pictureService->add($video,$slugger,'videos_directory');
                 $vd = new Media();
                 $vd->setMediaUrl($fichier_2);
-                $vd->setContent($content);
+                $content->addMedia($vd);
                 $vd->setTypeMedia('Video');
                 $mediaRepository->save($vd);
             }
@@ -78,16 +72,8 @@ class ContentsController extends AbstractController
     #[Route('/{id}', name: 'app_content_show', methods: ['GET'])]
     public function show(Content $content, MediaRepository $mediaRepository): Response
     {
-        $imgs = $mediaRepository->findBy(["content"=>$content->getId()]) ;
-        $imageUrls = [];
-
-        foreach ($imgs as $img) {
-            $imageUrls[] = $img->getMediaUrl();
-        }
-
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
-            'imgs' => $imageUrls
         ]);
     }
 
@@ -98,31 +84,22 @@ class ContentsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $fleSystem = new Filesystem();
-            $imgs = $mediaRepository->findBy(["content"=>$content->getId()]) ;
-            foreach ($imgs as $img) {
-                $mediaRepository->remove($img, true);
-                $fleSystem->remove($img->getMediaUrl());
-            }
-
             $images = $form->get('images')->getData();
             foreach($images as $image){
-
-                $fichier = $pictureService->set($image,$slugger,'images_directory', );
+                $fichier = $pictureService->add($image,$slugger,'images_directory');
                 $img = new Media();
                 $img->setMediaUrl($fichier);
-                $img->setContent($content);
+                $content->addMedia($img);
                 $img->setTypeMedia('Image');
                 $mediaRepository->save($img);
             }
-            // on recupere la video
+
             $videos = $form->get('videos')->getData();
             foreach($videos as $video){
                 $fichier_2 = $pictureService->add($video,$slugger,'videos_directory');
                 $vd = new Media();
                 $vd->setMediaUrl($fichier_2);
-                $vd->setContent($content);
+                $content->addMedia($vd);
                 $vd->setTypeMedia('Video');
                 $mediaRepository->save($vd);
             }

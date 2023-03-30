@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 class ContentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -21,11 +22,13 @@ class ContentType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('images', FileType::class,[
-                     'multiple' => true,
-                     'mapped' => false,
+            ->add('images', FileType::class, [
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
+
             ])
-            ->add('videos', FileType::class,[
+            ->add('videos', FileType::class, [
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
@@ -39,21 +42,18 @@ class ContentType extends AbstractType
                 ],
                 'placeholder' => 'Type de publication',
             ])
-
-           ->add('tags', EntityType::class, [
+            ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
                 'query_builder' => function (TagRepository $tagRepository) {
-                   return $tagRepository->createQueryBuilder('t')
-                       ->orderBy('t.name', 'ASC');
+                    return $tagRepository->createQueryBuilder('t')
+                        ->orderBy('t.name', 'ASC');
                 },
-            ])
-        ;
+            ]);
     }
-
 
 
     public function configureOptions(OptionsResolver $resolver): void

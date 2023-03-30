@@ -22,28 +22,23 @@ class Content
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $UpdatedAt = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
-
-
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class)]
-    private Collection $tag;
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'contents')]
+    private Collection $tags;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $tags = [];
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: Media::class)]
+    private Collection $medias;
 
     public function __construct()
     {
-        $this->tag = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -97,19 +92,6 @@ class Content
         return $this;
     }
 
-
-    public function getTags(): ?array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?string $tags): self
-    {
-        $this->tags =  $tags;
-
-        return $this;
-    }
-
     public function getType(): ?string
     {
         return $this->type;
@@ -125,15 +107,15 @@ class Content
     /**
      * @return Collection<int, Tag>
      */
-    public function getTag(): Collection
+    public function getTags(): Collection
     {
-        return $this->tag;
+        return $this->tags;
     }
 
     public function addTag(Tag $tag): self
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
@@ -141,7 +123,37 @@ class Content
 
     public function removeTag(Tag $tag): self
     {
-        $this->tag->removeElement($tag);
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias->add($media);
+            $media->setContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->removeElement($media)) {
+            // set the owning side to null (unless already changed)
+            if ($media->getContent() === $this) {
+                $media->setContent(null);
+            }
+        }
 
         return $this;
     }

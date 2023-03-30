@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/tag')]
 class TagController extends AbstractController
@@ -25,10 +26,11 @@ class TagController extends AbstractController
     public function new(Request $request, TagRepository $tagRepository): Response
     {
         $tag = new Tag();
+        $slugger = new AsciiSlugger();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $tag->setSlug($slugger->slug($tag->getName()));
             $tagRepository->save($tag, true);
 
             return $this->redirectToRoute('back_app_tag_index', [], Response::HTTP_SEE_OTHER);

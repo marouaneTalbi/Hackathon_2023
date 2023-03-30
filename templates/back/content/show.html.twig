@@ -7,40 +7,49 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ content.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ content.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ content.content }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ content.UpdatedAt ? content.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                {% for img in imgs %}
-                    <td><img src="{{ asset('uploads/images/' ~ img) }}" alt="" width="100px"></td>
+        <tr>
+            <th>Id</th>
+            <td>{{ content.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ content.title }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ content.content }}</td>
+        </tr>
+        <tr>
+            <th>CreatedAt</th>
+            <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+
+        <tr>
+            <th>Media</th>
+            {% for media in content.medias.toArray %}
+                {% if media.type == "Image" %}
+                    <td>
+                        <img src="{{ asset('uploads/images/' ~ media.url) }}" alt="" height="100px" width="100px">
+                    </td>
+                {% elseif media.type == "Video" %}
+                    <td>
+                        <video src="{{ asset('uploads/images/' ~ media.url) }}"></video>
+                    </td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Type de publication</th>
+            <td>{{ content.type }}</td>
+        </tr>
+        <tr>
+            <th>Tags</th>
+            <td>
+                {% for tag in content.tags.toArray %}
+                    {{ tag.getName }}
                 {% endfor %}
-            </tr>
-            <tr>
-                <th>Type de publication</th>
-                <td>{{ content.type }}</td>
-            </tr>
-            <tr>
-                <th>Tags</th>
-                <td>{{ content.tags }}</td>
-            </tr>
+            </td>
+        </tr>
         </tbody>
     </table>
 
