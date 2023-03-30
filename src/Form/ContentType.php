@@ -25,7 +25,8 @@ class ContentType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-            ->add('tags', ChoiceType::class, [
+            ->add('type', ChoiceType::class, [
+                'label' => 'Type de publication',
                 'choices' => [
                     'Tuto' => 'Tuto',
                     'Guide' => 'Guide',
@@ -33,6 +34,15 @@ class ContentType extends AbstractType
                 ],
                 'placeholder' => 'Type de publication',
             ])
+            /*->add('tags', ChoiceType::class, [
+                'label' => 'Tags',
+                'choices' => [
+                    'tag 1' => 'tag 1',
+                    'tag 2' => 'tag 2',
+                    'tag 3' => 'tag 3',
+                ],
+                'placeholder' => 'Tags',
+            ])*/
 
         ;
     }

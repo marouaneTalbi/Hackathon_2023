@@ -13,8 +13,8 @@
                 <th>Content</th>
                 <th>UpdatedAt</th>
                 <th>CreatedAt</th>
-                <th>Tags</th>
-                <th>Type</th>
+                <th>Image</th>
+                <th>Type de publication</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,10 +27,8 @@
                 <td>{{ content.UpdatedAt ? content.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ content.tags }}</td>
-                <td>{{ content.type }}</td>
                 <td>
-                    <a href="{{ path('back_app_content_show', {'id': content.id}) }}">show</a>
-                    <a href="{{ path('back_app_content_edit', {'id': content.id}) }}">edit</a>
+                    <a href="{{ path('front_app_content_show', {'id': content.id}) }}">show</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +39,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('back_app_content_new') }}">Create new</a>
 {% endblock %}
