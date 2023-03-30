@@ -23,6 +23,7 @@ class ContentType extends AbstractType
             ->add('videos', FileType::class,[
                 'multiple' => true,
                 'mapped' => false,
+                'required' => false,
             ])
             ->add('tags', ChoiceType::class, [
                 'choices' => [

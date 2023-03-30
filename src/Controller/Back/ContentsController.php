@@ -10,6 +10,7 @@ use App\Repository\ContentTypeRepository;
 use App\Repository\MediaRepository;
 use App\Service\PictureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +38,7 @@ class ContentsController extends AbstractController
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
         $content->setCreatedAt(new \DateTimeImmutable());
+
         if ($form->isSubmitted() && $form->isValid()) {
             // on recupere les images
             $images = $form->get('images')->getData();
@@ -71,35 +73,56 @@ class ContentsController extends AbstractController
     #[Route('/{id}', name: 'app_content_show', methods: ['GET'])]
     public function show(Content $content, MediaRepository $mediaRepository): Response
     {
-        $imgs = $mediaRepository->findBy(["content"=>$content->getId()]);
+        $imgs = $mediaRepository->findBy(["content"=>$content->getId()]) ;
+        $imageUrls = [];
+
+        foreach ($imgs as $img) {
+            $imageUrls[] = $img->getMediaUrl();
+        }
+
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
-            'imgs' => $imgs,
+            'imgs' => $imageUrls
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_content_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Content $content, ContentRepository $contentRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request,PictureService $pictureService, Content $content,MediaRepository $mediaRepository, ContentRepository $contentRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
 
-                }
-                $content->setImage($newFilename);
+            $fleSystem = new Filesystem();
+            $imgs = $mediaRepository->findBy(["content"=>$content->getId()]) ;
+            foreach ($imgs as $img) {
+                $mediaRepository->remove($img, true);
+                $fleSystem->remove($img->getMediaUrl());
+
             }
+
+            $images = $form->get('images')->getData();
+            foreach($images as $image){
+
+                $fichier = $pictureService->set($image,$slugger,'images_directory', );
+                $img = new Media();
+                $img->setMediaUrl($fichier);
+                $img->setContent($content);
+                $img->setTypeMedia('Image');
+                $mediaRepository->save($img);
+            }
+            // on recupere la video
+            $videos = $form->get('videos')->getData();
+            foreach($videos as $video){
+                $fichier_2 = $pictureService->add($video,$slugger,'videos_directory');
+                $vd = new Media();
+                $vd->setMediaUrl($fichier_2);
+                $vd->setContent($content);
+                $vd->setTypeMedia('Video');
+                $mediaRepository->save($vd);
+            }
+
             $contentRepository->save($content, true);
             return $this->redirectToRoute('back_app_content_index', [], Response::HTTP_SEE_OTHER);
         }
