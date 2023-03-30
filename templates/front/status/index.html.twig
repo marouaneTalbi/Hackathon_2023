@@ -1,0 +1,21 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Mes status{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div>
+            <p>{{ user.lastname }}</p>
+        </div>
+        <div>
+            {% for status in user.statuses.toArray %}
+                {{ status.getName }}
+                <br>
+                Fin : {{ status.getEndDate|date('Y-m-d H:i:s') }} |
+                Start :{{ status.getStartDate|date('Y-m-d H:i:s') }}
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
