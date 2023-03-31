@@ -3,6 +3,24 @@
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
+    <section class="global-container-responsive">
+        <div class="panel-responsive">
+            <div class="logoContainer"> 
+                <img class="imgLogo" src="{{ asset('assets/images/Logotype.svg')}}">
+            </div>
+            <div class="buttons-container"> 
+                <h1>Gestion des contenus</h1>
+                <button>Programmer une publication</button>
+                <button>Voir les inscris aux webinars</button>
+                <button>Voir les discussions</button>
+                <button>Statistiques</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
     <section class="global-container">
         <div class="panel">
             <header>
@@ -191,7 +209,6 @@ window.addEventListener("keydown", function(event) {
    }
 </script>
 
-   
 
         {#  <button class="modalButton" id="open-modal">open</button>
         <button class="modalButton" style="background-color: red" id="open-modal2">open</button>

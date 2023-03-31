@@ -3,7 +3,7 @@
 {% block title %}Choisi ton action{% endblock %}
 
 {% block body %}
-
+{% if app.user %}
     <section class="global-container">
             <div class="panel">
                 <h3>Créer un nouveau contenu</h3>
@@ -36,5 +36,5 @@
                 </div>
             </div>
         </section>
-        
+    {% endif %}
 {% endblock %}

@@ -22,7 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 #[Route('/content')]
-class ContentsController extends AbstractController
+class ContentController extends AbstractController
 {
     #[Route('/', name: 'app_content_index', methods: ['GET'])]
     public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response

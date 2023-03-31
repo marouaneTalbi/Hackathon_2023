@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends AbstractController
 {
@@ -18,9 +19,14 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/{type}/choose-content', name: 'choose_content')]
-    public function becomeNovice(Request $request,UserRepository $userRepository): Response
+    public function becomeNovice(Request $request,UserRepository $userRepository,AuthenticationUtils $authenticationUtils): Response
     {
         $user = $this->getUser();
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+        if ($user == null) {
+            return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        }
 
         if($request->get('type') == "novice") {
             $user->setRoles(['ROLE_NOVICE']);
