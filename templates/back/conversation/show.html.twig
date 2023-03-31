@@ -1,0 +1,33 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+
+
+{% block body %}
+    <div class="conversation-container">
+        <br>
+        <div class="message-container">
+                        {% for chat in conversation.chat.toArray %}
+                            <article class="{{ chat.client.roles[0] == "ROLE_USER" ? "user-message" : "admin-message" }} ">
+                                <p>{{ chat.client.roles[0] == "ROLE_USER" }} | {{ chat.timestamp|date('Y-m-d H:i:s') }}</p>
+                                <p>{{ chat.text }}</p>
+                            </article>
+                            <hr>
+                        {% endfor %}
+        </div>
+        <template  id="template-message">
+            <article class="message-info">
+                <p id="user-info"></p>
+                <p id="user-text"></p>
+            </article>
+        </template>
+
+        <br>
+        {{ include('back/chat/_form.html.twig') }}
+    </div>
+{% endblock %}
+
+
+
+

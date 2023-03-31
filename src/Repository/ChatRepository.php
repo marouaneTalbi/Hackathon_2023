@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Content;
+use App\Entity\Chat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Content>
+ * @extends ServiceEntityRepository<Chat>
  *
- * @method Content|null find($id, $lockMode = null, $lockVersion = null)
- * @method Content|null findOneBy(array $criteria, array $orderBy = null)
- * @method Content[]    findAll()
- * @method Content[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Chat|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Chat|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Chat[]    findAll()
+ * @method Chat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContentRepository extends ServiceEntityRepository
+class ChatRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Content::class);
+        parent::__construct($registry, Chat::class);
     }
 
-    public function save(Content $entity, bool $flush = false): void
+    public function save(Chat $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ContentRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Content $entity, bool $flush = false): void
+    public function remove(Chat $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,21 +39,8 @@ class ContentRepository extends ServiceEntityRepository
         }
     }
 
-    /*public function findByTag(array $tags)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->join('c.tags', 't');
-
-        foreach ($tags as $key => $tag) {
-            $qb->andWhere(":tag$key MEMBER OF c.tags")
-                ->setParameter("tag$key", $tag);
-        }
-
-        return $qb->getQuery()->getResult();
-    }*/
-
 //    /**
-//     * @return Content[] Returns an array of Content objects
+//     * @return Chat[] Returns an array of Chat objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -67,7 +54,7 @@ class ContentRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Content
+//    public function findOneBySomeField($value): ?Chat
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

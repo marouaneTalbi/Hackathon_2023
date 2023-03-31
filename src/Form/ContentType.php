@@ -39,6 +39,8 @@ class ContentType extends AbstractType
                     'Tuto' => 'Tuto',
                     'Guide' => 'Guide',
                     'Article' => 'Article',
+                    'Discussion' => 'Discussion',
+                    'Conseil' => 'Conseil',
                 ],
                 'placeholder' => 'Type de publication',
             ])
