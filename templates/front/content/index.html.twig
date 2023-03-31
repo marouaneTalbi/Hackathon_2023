@@ -52,13 +52,42 @@
                 <div class="content-card">
                     <div class="left">
                         <div class="top">
-                            <h2>{{ content.title }}</h2>
-                            <time>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
-                            <div class="tags">
-                                {% for tag in tags %}
-                                    <div class="tag">{{tag.name}}</div>
-                                {% endfor %}
-                            </div>
+                            {% if content.type == 'Article' %}
+                                <h2 style="color: #75A3E3">{{ content.title }}</h2>
+                                <time style="color: #75A3E3">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #75A3E3" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #75A3E3; border-color: #75A3E3" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Tutoriel' %}
+                                <h2 style="color: #E5786C">{{ content.title }}</h2>
+                                <time style="color: #E5786C">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #E5786C" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #E5786C; border-color: #E5786C" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Conseil' %}
+                                <h2 style="color: #FFBE1A">{{ content.title }}</h2>
+                                <time style="color: #FFBE1A">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #FFBE1A" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #FFBE1A; border-color: #FFBE1A" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Webinar' %}
+                                <h2 style="color: #466288">{{ content.title }}</h2>
+                                <time style="color: #466288">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #466288" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #466288; border-color: #466288" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
                         <p>{{ content.content }}</p>
                     </div>
