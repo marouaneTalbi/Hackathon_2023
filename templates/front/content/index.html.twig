@@ -3,6 +3,24 @@
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
+    <section class="global-container-responsive">
+        <div class="panel-responsive">
+            <div class="logoContainer"> 
+                <img class="imgLogo" src="{{ asset('assets/images/Logotype.svg')}}">
+            </div>
+            <div class="buttons-container"> 
+                <h1>Gestion des contenus</h1>
+                <button>Programmer une publication</button>
+                <button>Voir les inscris aux webinars</button>
+                <button>Voir les discussions</button>
+                <button>Statistiques</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
     <section class="global-container">
         <div class="panel">
             <header>
@@ -117,7 +135,7 @@
             </div>
         </div>
 
-<script>
+
 // Lorsque l'utilisateur appuie sur la touche "Escape", masquer la modal
 window.addEventListener("keydown", function(event) {
   if (event.key === "Escape") {
@@ -162,7 +180,17 @@ window.addEventListener("keydown", function(event) {
    }
 </script>
 
-   
+                    <div class="flex_modal_pub2">
+                        <button class="buttonModalPub"> -> Sauvegarder </button>
+                    </div>
+
+                    <div>
+                        <a class="publication_link">Quitter sans sauvegarder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {#  <button class="modalButton" id="open-modal">open</button>
         <button class="modalButton" style="background-color: red" id="open-modal2">open</button>
