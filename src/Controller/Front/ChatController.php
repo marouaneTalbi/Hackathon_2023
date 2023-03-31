@@ -13,12 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\TagRepository;
 
 #[Route('/chat'), IsGranted('ROLE_USER')]
 class ChatController extends AbstractController
 {
     #[Route('/', name: 'app_chat')]
-    public function index(ConversationRepository $conversationRepository): Response
+    public function index(ConversationRepository $conversationRepository, TagRepository $tagRepository): Response
     {
         $conversation = $conversationRepository->findBy([
             'client' => $this->getUser(),
@@ -37,6 +38,7 @@ class ChatController extends AbstractController
         }
         return $this->render('front/chat/index.html.twig', [
             'conversation' => $conversation,
+            'tags' => $tagRepository->findAll()
         ]);
     }
 

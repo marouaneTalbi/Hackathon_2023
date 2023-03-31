@@ -7,6 +7,48 @@
     <div class="global-container" >
         
         <div class="panel">
+        <header>
+                <ul>
+                    <li><a href="{{ path('front_app_content') }}">Contenus généraux</a></li>
+                    <li><a href="{{ path('front_app_advice') }}">Nos conseils</a></li>
+                    <li><a href="{{ path('front_app_chat') }}">Discusssions</a></li>
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <div class="header">
+                                <h4 class="modal-title">Filtrer les contenus</h4>
+                                <div class="close">
+                                    <img class="logo" src="{{ asset('assets/images/filter red.svg') }}" />
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <p>Type de contenus</p>
+                                <div class="tags">
+                                    <p class="red" onclick="changeBackgroundtype(this)">Tutoriels</p>
+                                    <p class="purple" onclick="changeBackgroundtype(this)" >Interviews</p>
+                                    <p class="blue" onclick="changeBackgroundtype(this)">Articles</p>
+                                    <p class="yellow" onclick="changeBackgroundtype(this)">Conseils</p>
+                                    <p class="dark-blue" onclick="changeBackgroundtype(this)">Webinars</p>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <p>Mots clefs</p>
+                                <div class="tags">
+                                    {% for tag in tags %}
+                                        <p onclick="changeBackground(this)">{{tag.name}}</p>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <button class="validate" onclick="filter();">Valider</button>
+                        </div>
+                    </div>
+                </ul>
+                <div class="filter" id="openButton">
+                    <div class="logo-container" class="close">
+                        <img class="logo" src="{{ asset('assets/images/filter.svg') }}" />
+                    </div>
+                </div>
+            </header>
             {% for chat in conversation.chat.toArray %}
                 <article class="{{ chat.client.roles[0] == "ROLE_USER" ? "user-message" : "admin-message" }} ">
                     <p>{{ chat.client.roles[0] == "ROLE_USER" }} | {{ chat.timestamp|date('Y-m-d H:i:s') }}</p>
