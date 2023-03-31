@@ -3,6 +3,9 @@
 namespace App\Controller\Front;
 
 use App\Entity\Content;
+use App\Repository\ContentRepository;
+use App\Repository\MediaRepository;
+use App\Repository\TagRepository;
 use App\Entity\Media;
 use App\Entity\Tag;
 use App\Form\ContentType;
@@ -13,18 +16,14 @@ use App\Service\PictureService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 class ContentController extends AbstractController
 {
     #[Route('/content', name: 'app_content', methods: ['GET'])]
-    public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
+    public function index(TagRepository $tagRepository, ContentRepository $contentRepository): Response
     {
         $imgs = $mediaRepository->findAll();
         $resultas2 =[];
@@ -70,11 +69,10 @@ class ContentController extends AbstractController
                 'tags' => $tagRepository->findAll()
             ]);
         }
-
     }
 
     #[Route('/advice', name: 'app_advice', methods: ['GET'])]
-    public function advice(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
+    public function advice(ContentRepository $contentRepository, TagRepository $tagRepository): Response
     {
         $contents = $contentRepository->findBy(['type' => 'Conseil']);
         
@@ -85,7 +83,7 @@ class ContentController extends AbstractController
     }
 
     #[Route('/discussion', name: 'app_discussion', methods: ['GET'])]
-    public function discussion(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
+    public function discussion(ContentRepository $contentRepository, TagRepository $tagRepository): Response
     {
         $contents = $contentRepository->findBy(['type' => 'Discussion']);
         return $this->render('front/content/index.html.twig', [

@@ -25,6 +25,9 @@ class Conversation
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $timestamp = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $source = null;
+
     public function __construct()
     {
         $this->chat = new ArrayCollection();
@@ -85,6 +88,18 @@ class Conversation
     public function setTimestamp(\DateTimeInterface $timestamp): self
     {
         $this->timestamp = $timestamp;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->source;
+    }
+
+    public function setSource(string $source): self
+    {
+        $this->source = $source;
 
         return $this;
     }
