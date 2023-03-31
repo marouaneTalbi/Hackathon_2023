@@ -23,18 +23,21 @@
                             <div class="modal-body">
                                 <p>Type de contenus</p>
                                 <div class="tags">
-                                    <div></div>
+                                    <p onclick="changeBackgroundtype(this)">Tuto</p>
+                                    <p onclick="changeBackgroundtype(this)" >Guide</p>
+                                    <p onclick="changeBackgroundtype(this)">Article</p>
                                 </div>
                             </div>
                             <div class="modal-body">
                                 <p>Mots clefs</p>
                                 <div class="tags">
                                     {% for tag in tags %}
-                                        <p>{{tag.name}}</p>
+                                        <p onclick="changeBackground(this)">{{tag.name}}</p>
                                     {% endfor %}
                                 </div>
+
                             </div>
-                            <button class="validate">Valider</button>
+                            <button class="validate" onclick="filter();">Valider</button>
                         </div>
                     </div>
                 </ul>
@@ -53,8 +56,9 @@
                             <h2>{{ content.title }}</h2>
                             <time>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                             <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
+                                {% for tag in tags %}
+                                    <div class="tag">{{tag.name}}</div>
+                                {% endfor %}
                             </div>
                         </div>
                         <p>{{ content.content }}</p>
@@ -110,7 +114,42 @@ window.addEventListener("keydown", function(event) {
     modal.style.display = "none";
   }
 });
+   function changeBackground(tag) {
+       if(tag.style.background == "green"){
+       tag.style.background = "none";
+       tag.style.color = "red";
+       }
+       else{
+       tag.style.background = "green";
+       tag.style.color = "white";
+       }
+   }
+   function changeBackgroundtype(tag) {
+       if(tag.style.background == "green"){
+           tag.style.background = "none";
+           tag.style.color = "red";
+       }
+       else{
+           tag.style.background = "lightgreen";
+           tag.style.color = "white";
+       }
+   }
 
+   function filter(){
+       var greenElements = [];
+       var typeElements = [];
+       var tags = document.getElementsByTagName("p");
+       for (var i = 0; i < tags.length; i++) {
+       var tag = tags[i];
+       if (tag.style.background === "green") {
+       greenElements.push(tag.textContent);
+        }
+       if (tag.style.background === "lightgreen") {
+       typeElements.push(tag.textContent);
+       }
+       }
+       location.replace("/content/?filter="+ greenElements +"&type="+ typeElements);
+   }
 </script>
 
 {% endblock %}

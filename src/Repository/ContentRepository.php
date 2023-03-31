@@ -39,6 +39,19 @@ class ContentRepository extends ServiceEntityRepository
         }
     }
 
+    /*public function findByTag(array $tags)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.tags', 't');
+
+        foreach ($tags as $key => $tag) {
+            $qb->andWhere(":tag$key MEMBER OF c.tags")
+                ->setParameter("tag$key", $tag);
+        }
+
+        return $qb->getQuery()->getResult();
+    }*/
+
 //    /**
 //     * @return Content[] Returns an array of Content objects
 //     */
