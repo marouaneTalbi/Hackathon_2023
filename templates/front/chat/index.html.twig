@@ -4,9 +4,9 @@
 
 
 {% block body %}
-    <div class="conversation-container" >
-        <br>
-        <div class="message-container">
+    <div class="global-container" >
+        
+        <div class="panel">
             {% for chat in conversation.chat.toArray %}
                 <article class="{{ chat.client.roles[0] == "ROLE_USER" ? "user-message" : "admin-message" }} ">
                     <p>{{ chat.client.roles[0] == "ROLE_USER" }} | {{ chat.timestamp|date('Y-m-d H:i:s') }}</p>
@@ -14,6 +14,7 @@
                 </article>
                 <hr>
             {% endfor %}
+            {{ include('front/chat/_form.html.twig') }}
         </div>
         <template id="template-message">
             <article class="message-info">
@@ -21,9 +22,6 @@
                 <p id="user-text"></p>
             </article>
         </template>
-
-        <br>
-        {{ include('front/chat/_form.html.twig') }}
     </div>
 {% endblock %}
 
