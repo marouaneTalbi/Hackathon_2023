@@ -74,6 +74,6 @@ function listenConversation(val = null) {
                 }
             })
             .catch(error => console.error(error));
-    }, 5000);
+    }, 2500);
 }
 
