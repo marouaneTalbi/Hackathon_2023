@@ -18,7 +18,11 @@ class ChatController extends AbstractController
     #[Route('/chat', name: 'app_chat')]
     public function index(ConversationRepository $conversationRepository): Response
     {
-        $conversation = $conversationRepository->findBy(['client' => $this->getUser()], ['timestamp' => 'DESC']);
+        $conversation = $conversationRepository->findBy([
+            'client' => $this->getUser(),
+            'source' => 'chat'
+        ], ['timestamp' => 'DESC']
+        );
         $latest_conversation = count($conversation) > 0 ? $conversation[0] : null;
         $conversationDate = $latest_conversation?->getTimestamp();
         $currentDate = new DateTime('now');
@@ -27,6 +31,7 @@ class ChatController extends AbstractController
             $conversation = $latest_conversation;
         } else {
             $conversation = new Conversation();
+            $conversation->setSource("chat");
         }
         return $this->render('front/chat/index.html.twig', [
             'conversation' => $conversation,
@@ -44,7 +49,7 @@ class ChatController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $message = $data['message'];
         $user = $userRepository->findOneBy(['id' => $user_id]);
-        $conversations = $conversationRepository->findBy(['client' => $user], ['timestamp' => 'DESC']);
+        $conversations = $conversationRepository->findBy(['client' => $user, 'source' => 'chat'], ['timestamp' => 'DESC']);
         $latest_conversation = count($conversations) > 0 ? $conversations[0] : null;
         $conversationDate = $latest_conversation?->getTimestamp();
         $currentDate = new DateTime('now');
@@ -54,6 +59,7 @@ class ChatController extends AbstractController
         } else {
             $conversation = new Conversation();
         }
+        $conversation->setSource("chat");
         $conversation
             ->setTimestamp(new DateTime())
             ->setClient($user);

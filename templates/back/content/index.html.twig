@@ -1,6 +1,23 @@
 {% extends 'base_back.html.twig' %}
 
 {% block body %}
+    <section class="global-container-responsive">
+        <div class="panel-responsive">
+            <div class="logoContainer"> 
+                <img class="imgLogo" src="{{ asset('assets/images/Logotype.svg')}}">
+            </div>
+            <div class="buttons-container"> 
+                <h1>Gestion des contenus</h1>
+                <button class="reponsive-button">Programmer une publication</button>
+                <button class="reponsive-button">Voir les inscris aux webinars</button>
+                <button class="reponsive-button">Voir les discussions</button>
+                <button class="reponsive-button">Statistiques</button>
+            </div>
+        </div>
+    </section>
+
+
+{% block body %}
     <section class="global-container">
             <div class="panel">
                 <h3>Créer un nouveau contenu</h3>

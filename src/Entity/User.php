@@ -52,6 +52,7 @@ class User implements  PasswordAuthenticatedUserInterface, UserInterface
 
     public function __construct()
     {
+        $this->statuses = new ArrayCollection();
         $this->chats = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->statuses = new ArrayCollection();

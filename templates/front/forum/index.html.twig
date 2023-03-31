@@ -1,0 +1,15 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+
+{% block body %}
+    {% for conversation in conversations %}
+        <p>{{ conversation.client.lastname }} | {{ conversation.client.lastname }} | {{ conversation.timestamp|date('Y-m-d H:i:s') }}</p>
+        <p>{{ conversation.chat.first.text }}</p>
+        <a href={{ path('front_app_forum_show', {'id': conversation.id}) }}>Suivre la conversation la conversation</a>
+    {% endfor %}
+
+{% endblock %}
+
+
