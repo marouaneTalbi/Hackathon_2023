@@ -94,8 +94,7 @@ class ContentController extends AbstractController
     {
         $imgs = $mediaRepository->findBy(["content"=>$content->getId()]);
         return $this->render('front/content/show.html.twig', [
-            'content' => $content,
-            'imgs' => $imgs,
+            'content' => $content
         ]);
     }
 

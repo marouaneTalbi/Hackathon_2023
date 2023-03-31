@@ -67,10 +67,10 @@
             </header>
             <div class="content-card-container">
             {% for content in contents %}
-                <div class="content-card">
+                <a href="{{ path('front_app_content_show', {'id': content.id}) }}" class="content-card">
                     <div class="left">
                         <div class="top">
-                            {% if content.type == 'Article' %}
+                            {% if content.type == 'Articles' %}
                                 <h2 style="color: #75A3E3">{{ content.title }}</h2>
                                 <time style="color: #75A3E3">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                                 <div style="color: #75A3E3" class="tags">
@@ -79,7 +79,7 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            {% if content.type == 'Tutoriel' %}
+                            {% if content.type == 'Tutoriels' %}
                                 <h2 style="color: #E5786C">{{ content.title }}</h2>
                                 <time style="color: #E5786C">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                                 <div style="color: #E5786C" class="tags">
@@ -88,7 +88,7 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            {% if content.type == 'Conseil' %}
+                            {% if content.type == 'Conseils' %}
                                 <h2 style="color: #FFBE1A">{{ content.title }}</h2>
                                 <time style="color: #FFBE1A">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                                 <div style="color: #FFBE1A" class="tags">
@@ -97,7 +97,7 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            {% if content.type == 'Webinar' %}
+                            {% if content.type == 'Webinars' %}
                                 <h2 style="color: #466288">{{ content.title }}</h2>
                                 <time style="color: #466288">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
                                 <div style="color: #466288" class="tags">
@@ -106,11 +106,11 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
+                            <p>{{content.content|raw}}</p>
                         </div>
-                        <p>{{ content.content }}</p>
                     </div>
                     <div class="right">
-                    {% for media in content.medias.toArray %}
+                    {# {% for media in content.medias.toArray %}
                         {% if media.type == "Image" %}
                             <td>
                                 <img src="{{ asset('uploads/images/' ~ media.url) }}" alt="" height="100px" width="100px">
@@ -120,9 +120,10 @@
                                 <video src="{{ asset('uploads/images/' ~ media.url) }}"></video>
                             </td>
                         {% endif %}
-                    {% endfor %}
+                    {% endfor %} #}
+                        <img class="imgLogo" src="{{ asset('assets/images/img.png')}}">
                     </div>
-                </div>
+                </a>
             {% endfor %}
             </div>
         </div>

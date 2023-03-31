@@ -43,7 +43,9 @@ class ContentController extends AbstractController
             $content->setContent($_POST["htmlContent"]);
             $content->setType($_POST['type']);
             $tags = $_POST['tag'];
+
             $my_tags = $tagRepository->findOneBy(['name'=>$tags]);
+
             $content->addTag($my_tags);
             if(isset($_POST["titleContent"]) && !empty($_POST["titleContent"])){
                 $content->setTitle($_POST["titleContent"]);
@@ -61,6 +63,8 @@ class ContentController extends AbstractController
     #[Route('/{id}', name: 'app_content_show', methods: ['GET'])]
     public function show(Content $content, MediaRepository $mediaRepository): Response
     {
+        
+
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
         ]);
