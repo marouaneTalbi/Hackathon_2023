@@ -37,14 +37,14 @@ class ContentController extends AbstractController
     #[Route('/new', name: 'app_content_new', methods: ['GET', 'POST'])]
     public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService, TagRepository $tagRepository): Response
     {
-
-
         $content = new Content();
         if(isset($_POST["htmlContent"]) && !empty($_POST["htmlContent"])) {
             $content->setCreatedAt(new \DateTimeImmutable());
             $content->setContent($_POST["htmlContent"]);
             $content->setType($_POST['type']);
-            
+            $tags = $_POST['tag'];
+            $my_tags = $tagRepository->findOneBy(['name'=>$tags]);
+            $content->addTag($my_tags);
             if(isset($_POST["titleContent"]) && !empty($_POST["titleContent"])){
                 $content->setTitle($_POST["titleContent"]);
             }else{

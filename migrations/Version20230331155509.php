@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230331150044 extends AbstractMigration
+final class Version20230331155509 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -35,7 +35,7 @@ final class Version20230331150044 extends AbstractMigration
         $this->addSql('CREATE TABLE content_tag (content_id INT NOT NULL, tag_id INT NOT NULL, PRIMARY KEY(content_id, tag_id))');
         $this->addSql('CREATE INDEX IDX_B662E17684A0A3ED ON content_tag (content_id)');
         $this->addSql('CREATE INDEX IDX_B662E176BAD26311 ON content_tag (tag_id)');
-        $this->addSql('CREATE TABLE conversation (id INT NOT NULL, client_id INT DEFAULT NULL, timestamp TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE conversation (id INT NOT NULL, client_id INT DEFAULT NULL, timestamp TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, source VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_8A8E26E919EB6921 ON conversation (client_id)');
         $this->addSql('CREATE TABLE media (id INT NOT NULL, content_id INT DEFAULT NULL, type VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_6A2CA10C84A0A3ED ON media (content_id)');
