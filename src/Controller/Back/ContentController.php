@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\Content;
 use App\Entity\Media;
+use App\Entity\Tag;
 use App\Form\ContentType;
 use App\Repository\ContentRepository;
 use App\Repository\MediaRepository;
@@ -36,16 +37,19 @@ class ContentController extends AbstractController
     #[Route('/new', name: 'app_content_new', methods: ['GET', 'POST'])]
     public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService, TagRepository $tagRepository): Response
     {
+
+
         $content = new Content();
         if(isset($_POST["htmlContent"]) && !empty($_POST["htmlContent"])) {
             $content->setCreatedAt(new \DateTimeImmutable());
             $content->setContent($_POST["htmlContent"]);
+            $content->setType($_POST['type']);
+            
             if(isset($_POST["titleContent"]) && !empty($_POST["titleContent"])){
                 $content->setTitle($_POST["titleContent"]);
             }else{
                 $content->setTitle("Article test");
             }
-            $content->setType("Type test");
             $contentRepository->save($content, true);
         }
         // $htmlContent = $data['htmlContent'];
