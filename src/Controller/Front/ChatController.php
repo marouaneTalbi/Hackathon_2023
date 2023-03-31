@@ -8,14 +8,16 @@ use App\Repository\ChatRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\UserRepository;
 use DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/chat'), IsGranted('ROLE_USER')]
 class ChatController extends AbstractController
 {
-    #[Route('/chat', name: 'app_chat')]
+    #[Route('/', name: 'app_chat')]
     public function index(ConversationRepository $conversationRepository): Response
     {
         $conversation = $conversationRepository->findBy([
@@ -38,7 +40,7 @@ class ChatController extends AbstractController
         ]);
     }
 
-    #[Route('/chat/create', name: 'app_chat_create')]
+    #[Route('/create', name: 'app_chat_create')]
     public function create(Request $request, ChatRepository $chatRepository, ConversationRepository $conversationRepository, UserRepository $userRepository)
     {
         $chat = new Chat();

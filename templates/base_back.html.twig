@@ -34,6 +34,18 @@
         {% endif %}
         {% block body %}
         {% endblock %}
+        <style>
+
+            .chat {
+                background-color: lightblue;
+                padding: 20px;
+                border-radius: 999%;
+                color: white;
+                position: fixed;
+                bottom: 2vh;
+            }
+        </style>
+        <button class="chat" onclick="location.replace('/chat');">Chat</button>
     </body>
     <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>

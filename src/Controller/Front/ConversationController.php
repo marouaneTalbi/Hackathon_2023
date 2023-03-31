@@ -10,15 +10,17 @@ use App\Repository\UserRepository;
 use DateTime;
 use DateTimeZone;
 use http\Client;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+#[Route('/conversation'), IsGranted('ROLE_USER')]
 
 class ConversationController extends AbstractController
 {
-    #[Route('/conversation/listen/{id<\d+>?}')]
+    #[Route('/listen/{id<\d+>?}')]
     public function listen(int $id = null, ConversationRepository $conversationRepository): JsonResponse
     {
         $result = [];
@@ -30,7 +32,9 @@ class ConversationController extends AbstractController
                 'client' => $this->getUser(),
                 'source'=>'chat'
             ], ['timestamp'=>'DESC']);
-            $conversation = $conversation->getTimestamp()->diff($today)->d >= 1 ? new Conversation() : $conversation;
+            if ($conversation === null || $conversation?->getTimestamp()->diff($today)->d >= 1 ){
+                $conversation = new Conversation();
+            }
         } else {
             $conversation = $conversationRepository->find($id);
         }
