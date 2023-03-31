@@ -17,6 +17,7 @@
         {% endblock %}
     </head>
     <body>
+
     {% if app.user %}
         <nav>
             <img class="logo" src="{{ asset('assets/images/logo.svg') }}" />
@@ -35,7 +36,12 @@
             </ul>
         </nav>
     {% endif %}
-        {% block body %}{% endblock %}
+        {% block body %}
+
+        {% endblock %}
         
     </body>
+
+
+    <script src="./assets/modal.js" crossorigin="anonymous"></script>
 </html>
