@@ -29,7 +29,9 @@ class ConversationController extends AbstractController
             $conversation = $conversationRepository->findOneBy([
                 'client' => $this->getUser()
             ], ['timestamp'=>'DESC']);
-            $conversation = $conversation->getTimestamp()->diff($today)->d >= 1 ? new Conversation() : $conversation;
+            if ($conversation === null || $conversation?->getTimestamp()->diff($today)->d >= 1 ){
+                $conversation = new Conversation();
+            }
         } else {
             $conversation = $conversationRepository->find($id);
         }
