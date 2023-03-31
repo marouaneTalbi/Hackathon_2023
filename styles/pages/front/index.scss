@@ -60,7 +60,69 @@
         display: flex;
         flex-wrap: wrap;
         gap: 40px;
-        
-
     }
+}
+
+@media screen and (max-width: 1210px) {
+    .content-card-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+
+        & .content-card {
+            width: 70%;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    header {
+        & ul {
+            gap: 15px !important;
+        }
+    }
+    .content-card-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+
+        & .content-card {
+            width: 90%;
+            height: 200px;
+        }
+    }
+}
+
+@media screen and (max-width: 615px) {
+
+
+    header {
+        & ul {
+            flex-direction: column !important;
+        }
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+
+        .content-card {
+            width: 95% !important;
+            height: 150px !important;
+            
+            & h2  {
+                font-size: 18px !important;
+                line-height: 27px !important;
+            }
+        }
+
+        .left {
+            padding: 14px !important;
+        }
+    
 }
