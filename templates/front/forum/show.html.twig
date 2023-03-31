@@ -1,0 +1,19 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+
+{% block body %}
+    <p>{{ conversation.client.lastname }} | {{ conversation.client.lastname }} | {{ conversation.timestamp|date_modify("+2 hour")|date('Y-m-d H:i:s') }}</p>
+    {% for chat in conversation.chat.toArray %}
+        <p>{{ chat.client.lastname }} | {{ chat.client.firstname }} | {{ chat.timestamp|date_modify("+2 hour")|date('Y-m-d H:i:s') }} </p>
+        <p>{{ chat.text }}</p>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Envoyer') }}</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+

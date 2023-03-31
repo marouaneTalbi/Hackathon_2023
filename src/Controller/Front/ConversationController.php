@@ -27,12 +27,14 @@ class ConversationController extends AbstractController
             $today = (new DateTime('now', $timezone))->format('Y-m-d');
             $today = DateTime::createFromFormat('Y-m-d', $today);
             $conversation = $conversationRepository->findOneBy([
-                'client' => $this->getUser()
+                'client' => $this->getUser(),
+                'source'=>'chat'
             ], ['timestamp'=>'DESC']);
             $conversation = $conversation->getTimestamp()->diff($today)->d >= 1 ? new Conversation() : $conversation;
         } else {
             $conversation = $conversationRepository->find($id);
         }
+        $conversation->setSource("chat");
         foreach ($conversation->getChat()->toArray() as $chat) {
             $result[] = [
                 'message' => $chat->getText(),

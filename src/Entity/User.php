@@ -44,11 +44,6 @@ class User implements  PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\ManyToMany(targetEntity: Status::class, mappedBy: 'client')]
     private Collection $statuses;
 
-    public function __construct()
-    {
-        $this->statuses = new ArrayCollection();
-    }
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Chat::class)]
     private Collection $chats;
 
@@ -57,6 +52,7 @@ class User implements  PasswordAuthenticatedUserInterface, UserInterface
 
     public function __construct()
     {
+        $this->statuses = new ArrayCollection();
         $this->chats = new ArrayCollection();
         $this->conversations = new ArrayCollection();
     }

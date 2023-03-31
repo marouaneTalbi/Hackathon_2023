@@ -2,6 +2,4 @@
     <p>{{ conversation.client.lastname }} | {{ conversation.client.lastname }} | {{ conversation.timestamp|date('Y-m-d H:i:s') }}</p>
     <p>{{ conversation.chat.first.text }}</p>
     <a href={{ path('back_app_conversation_show', {'id': conversation.id}) }}>lien pour demarer la conversation</a>
-
-
 {% endfor %}
