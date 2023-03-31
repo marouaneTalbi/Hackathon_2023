@@ -1,9 +1,441 @@
 <!DOCTYPE html>
-<title>New Content</title>
-{% block body %}
-    <h1>Create new Content</h1>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>test editorJs</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
+    <script src="vanilla-picker.csp.min.js"></script>
+    <script src="dist/vanilla-picker.js"></script>
+    <link  href="vanilla-picker.csp.css" rel="stylesheet">
+</head>
+<body>
+<header>header</header>
+<main>
+    <section id="mainContent">
+        <section id="toolContainer" class="container">
+            <h1 id="toolBarTitle">Creer un nouveau contenu</h1>
+            <section id="toolElementsContainer">
+                <div id="toolElementsLeft">
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight')" id="button1"><img src="{{asset('assets/images/text.png')}}" alt="text icons"></div>
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight2')" id="button2"><img src="{{asset('assets/images/video.png')}}" alt="text icons"></div>
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight3')" id="button3"><img src="{{asset('assets/images/text.png')}}" alt="text icons"></div>
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight4')" id="button4"><img src="{{asset('assets/images/text.png')}}" alt="text icons"></div>
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight5')" id="button5"><img src="{{asset('assets/images/margin.png')}}" alt="text icons"></div>
+                    <div class="button-menu-left" onclick="displayOptions('toolElementsRight6')" id="button6"><img src="{{asset('assets/images/text.png')}}" alt="text icons"></div>
+                </div>
+                <div class="tool-elements" id="toolElementsRight">
+                    <input type="text" id="titleContent" placeholder="titre du contenu*" style="margin-bottom: 15px;">
+                    <div id="editor"></div>
+                    <div id="colorPicker"></div>
+                </div>
+                <div class="tool-elements" id="toolElementsRight2" style="display: none;">
+                    <p id="videoNameText">Aucun document telechargé</p>
+                    <input type="file" id="file-input" style="display: none;">
+                    <button id="importVideoButton" onclick="downloadVideo()">Importer une vidéo</button>
+                    <button id="importVignetteButton">Importer une vignette</button>
+                    <p class="text-recently" style="width: 100%;">Recemment importees: </p>
+                    <div id="lastImportVideoContainer">
+                    </div>
+                </div>
+                <div class="tool-elements" id="toolElementsRight3" style="display: none;">
+                    <p id="imageNameText">Aucun document telecharge</p>
+                    <input type="file" id="fileInput" style="display: none;">
+                    <button id="importImageButton" onclick="downloadFile()">Importer une photo</button>
+                    <p>Ajouter un contour</p>
+                    <div id="colorPickerContours"></div>
+                    <p class="text-recently" style="width:100%">Recemment importees: </p>
+                    <div id="lastImportImageContainer">
+                    </div>
+                </div>
+                <div class="tool-elements" id="toolElementsRight4" style="display: none;">
+                    <p>partie 4</p>
+                </div>
+                <div class="tool-elements" id="toolElementsRight5" style="display: none;">
+                    <p>partie 5</p>
+                </div>
+                <div class="tool-elements" id="toolElementsRight6" style="display: none;">
+                    <p>partie 6</p>
+                </div>
+            </section>
+            <section id="buttonContentContainer">
+                <button id="buttonSaveContent" onclick="saveArticle()">Sauvegarder</button>
+                <button id="buttonSaveDraft">Enregistrer dans les brouillons</button>
+                <button id="buttonPublishContent">Publier</button>
+            </section>
+        </section>
+        <section id="editContainer" class="container">
+            <div id="divEditContent">
 
-    {{ include('back/content/_form.html.twig') }}
+            </div>
+        </section>
+    </section>
+</main>
+<footer>footer</footer>
+<!-- <div id="editor"></div> -->
 
-    <a href="{{ path('back_app_content_index') }}">back to list</a>
-{% endblock %}
+<script src="index.js"></script>
+</body>
+</html>
+
+<style type="text/css">
+
+    #mainContent{
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    #toolContainer{
+        width: 350px;
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    #editContainer{
+        width: 962px;
+        min-height: 90vh;
+        margin-left: 50px;
+        position: relative;
+    }
+
+    .ck-editor{
+        position: sticky !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    .container{
+        background: #FFFFFF;
+        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #toolBarTitle{
+        font-family: 'Prompt';
+        font-style: normal;
+        font-weight: 700;
+        font-size: larger;
+        line-height: 24px;
+        text-align: center;
+        color: #5D738D;
+    }
+
+    #toolElementsContainer{
+        display: flex;
+        width: 100%;
+    }
+
+    .tool-elements{
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    #toolElementsLeft{
+        display: flex;
+        flex-direction: column;
+        height: 350px;
+        border-radius: 44px;
+        justify-content: center;
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        align-items: center;
+
+    }
+
+    #toolElementsLeft button {
+        margin-bottom: 15px;
+    }
+
+    #toolElementsRight, #toolElementsRight2, #toolElementsRight3, #toolElementsRight4, #toolElementsRight5{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    #importVideoButton, #importImageButton{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 16px;
+        gap: 8px;
+        width: 182px;
+        height: 36px;
+        background: #355070;
+        border: 1px solid #1F2F42;
+        box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+        border-radius: 4px;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    #importVignetteButton{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 16px;
+        gap: 8px;
+        width: 182px;
+        height: 36px;
+        background: #FFFFFF;
+        border: 1px solid #E1E5EA;
+        box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+        border-radius: 4px;
+    }
+
+    #videoNameText, #imageNameText{
+        font-family: 'Prompt';
+        font-style: normal;
+        font-weight: 500;
+        line-height: 15px;
+
+        color: #5D738D;
+
+    }
+
+    #lastImportImageContainer  img {
+        width: 100%;
+        height: 200px;
+    }
+
+    #lastImportVideoContainer  video {
+        width: 100%;
+        height: 200px;
+    }
+
+    .ck-editor__editable{
+        border: none !important;
+    }
+
+    #buttonContentContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+    }
+
+    #buttonContentContainer button {
+        margin-bottom: 15px;
+        box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+        border-radius: 4px;
+        gap: 8px;
+        width: 283px;
+        height: 42px;
+        border: 1px solid #E1E5EA;
+    }
+
+    #buttonSaveContent{
+        background: #355070;
+        color: white;
+        border: 1px solid #1F2F42;
+    }
+
+    #buttonSaveDraft {
+        color: #75A3E3;
+        background: #FFFFFF;
+    }
+
+    #buttonPublishContent{
+        color: #E5786C;
+        background: #FFFFFF;
+    }
+
+    .picker_done > button {
+        background: white;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .text-recently{
+        font-family: 'Prompt';
+        font-style: normal;
+        font-weight: 500;
+        line-height: 15px;
+        color: #5D738D;
+    }
+
+    .button-menu-left{
+        padding: 8px;
+        border-radius: inherit;
+        display: flex;
+        justify-content: center;
+        margin:auto;
+        border: solid 0.5px #5D738D;
+        cursor: pointer;
+    }
+
+</style>
+
+<script>
+    /* ckeditor bar */
+    ClassicEditor
+        .create( document.querySelector( '#divEditContent' ), {
+            toolbar: [
+                'undo', 'redo',
+                '|', 'heading',
+                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+            ],
+
+            shouldNotGroupWhenFull: false
+        } )
+        .catch( error => {
+            console.log( error );
+        } );
+    /****************/
+
+    /* color picker */
+    new Picker({
+        parent: document.querySelector('#colorPicker'),
+        popup: false
+    });
+    new Picker({
+        parent: document.querySelector('#colorPickerContours'),
+        popup: false
+    });
+    /****************/
+
+
+    /* options menu display */
+    function displayOptions(id){
+        let toolElements = document.getElementsByClassName('tool-elements');
+        for (var i = 0; i < toolElements.length; i++) {
+            elementId = toolElements[i].getAttribute('id');
+            if(elementId === id){
+                toolElements[i].style.display = 'flex';
+            }else{
+                toolElements[i].style.display = 'none';
+            }
+        }
+    }
+    /************************/
+
+    /* event button load image*/
+    function downloadFile() {
+        var inputFile = document.getElementById("fileInput");
+        inputFile.click();
+    }
+
+    function downloadVideo() {
+        var inputFile = document.getElementById("file-input");
+        inputFile.click();
+    }
+
+    var inputFile = document.getElementById("fileInput");
+    // Une fois que l'utilisateur a sélectionné le fichier, déclencher le téléchargement
+    const imageContainer = document.getElementById('lastImportImageContainer');
+
+    inputFile.addEventListener("change", (event) => {
+        const files = event.target.files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.addEventListener("load", () => {
+                const image = new Image();
+                image.src = reader.result;
+                imageContainer.appendChild(image);
+            });
+
+            reader.readAsDataURL(file);
+        }
+    });
+    /*****************************/
+
+
+    /* event button load image*/
+    const fileInput = document.getElementById("file-input");
+    const videoContainer = document.getElementById("lastImportVideoContainer");
+
+    fileInput.addEventListener("change", (event) => {
+        const filesDownloaded = event.target.files;
+
+        for (let i = 0; i < filesDownloaded.length; i++) {
+            const fileVideo = filesDownloaded[i];
+            const url = URL.createObjectURL(fileVideo);
+
+            const video = document.createElement("video");
+            video.setAttribute("controls", "");
+            video.setAttribute("draggable", true);
+            video.src = url;
+            video.controls = true;
+            videoContainer.appendChild(video);
+        }
+    });
+    /**************************/
+
+    document.onmouseup = function() {
+        var selection = window.getSelection().toString();
+        if (selection.length > 0) {
+            var span = document.createElement("span");
+            span.style.color = "red";
+            span.textContent = selection;
+            var range = window.getSelection().getRangeAt(0);
+            console.log(window.getSelection());
+            range.deleteContents();
+            range.insertNode(span);
+        }
+    };
+
+
+    /* event ajax pour enregistrer les images */
+
+    function saveImages(){
+        const images = document.querySelectorAll('#lastImportImageContainer img');
+        const promises = [];
+        images.forEach(image => {
+            const src = image.src;
+            const filename = src.split('/').pop();
+            const formData = new FormData();
+            formData.append('src', src);
+            formData.append('filename', filename);
+            const promise = fetch('https://localhost/download-image', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data.message);
+            });
+            promises.push(promise);
+        });
+
+        Promise.all(promises).then(() => {
+            console.log('Toutes les images ont été téléchargées.');
+        });
+    }
+
+    function saveArticle(){
+        const htmlArticle = document.querySelector('.ck-editor__editable_inline');
+        const stringArticle = htmlArticle.innerHTML;
+        const titleContent = document.getElementById("titleContent").value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://localhost/admin/content/new');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function (){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                console.log(xhr.responseText);
+            }
+        };
+
+        xhr.send('htmlContent=' + encodeURIComponent(stringArticle)+ '&titleContent=' + encodeURIComponent(titleContent));
+    }
+    /******************************************/
+</script>

@@ -37,10 +37,20 @@ class ContentsController extends AbstractController
     public function new(Request $request,ContentRepository $contentRepository,MediaRepository $mediaRepository, SluggerInterface $slugger, PictureService $pictureService, TagRepository $tagRepository): Response
     {
         $content = new Content();
-        $form = $this->createForm(ContentType::class, $content);
-        $form->handleRequest($request);
-        $content->setCreatedAt(new \DateTimeImmutable());
-        if ($form->isSubmitted() && $form->isValid()) {
+        if(isset($_POST["htmlContent"]) && !empty($_POST["htmlContent"])) {
+            $content->setCreatedAt(new \DateTimeImmutable());
+            $content->setContent($_POST["htmlContent"]);
+            if(isset($_POST["titleContent"]) && !empty($_POST["titleContent"])){
+                $content->setTitle($_POST["titleContent"]);
+            }else{
+                $content->setTitle("Article test");
+            }
+            $content->setType("Type test");
+            $contentRepository->save($content, true);
+        }
+        // $htmlContent = $data['htmlContent'];
+
+        /*if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
             foreach($images as $image){
                 $fichier = $pictureService->add($image,$slugger,'images_directory');
@@ -62,11 +72,11 @@ class ContentsController extends AbstractController
             }
             $contentRepository->save($content, true);
             return $this->redirectToRoute('back_app_content_index', [], Response::HTTP_SEE_OTHER);
-        }
+        }*/
 
         return $this->renderForm('back/content/new.html.twig', [
-            'content' => $content,
-            'form' => $form,
+            'content' => $content
+            //'form' => $form,
         ]);
     }
 
