@@ -9,9 +9,6 @@ use App\Repository\TagRepository;
 use App\Entity\Media;
 use App\Entity\Tag;
 use App\Form\ContentType;
-use App\Repository\ContentRepository;
-use App\Repository\MediaRepository;
-use App\Repository\TagRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContentController extends AbstractController
 {
     #[Route('/content', name: 'app_content', methods: ['GET'])]
-    public function index(TagRepository $tagRepository, ContentRepository $contentRepository): Response
+    public function index(TagRepository $tagRepository, ContentRepository $contentRepository, MediaRepository $mediaRepository): Response
     {
         $imgs = $mediaRepository->findAll();
         $resultas2 =[];
