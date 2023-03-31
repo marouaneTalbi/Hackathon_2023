@@ -27,7 +27,18 @@ class ContentController extends AbstractController
     public function index(ContentRepository $contentRepository, MediaRepository $mediaRepository, TagRepository $tagRepository): Response
     {
         $imgs = $mediaRepository->findAll();
+        $resultas2 =[];
         if (isset($_GET['filter'])){
+            $types = htmlspecialchars($_GET['type']);
+            if($types != null){
+                $tabTypes = explode(",", $types);
+                foreach ($tabTypes as $type){
+                    $resultasType = $contentRepository->findBy(["type"=>$type]);
+                    foreach ($resultasType as $res){
+                        $resultas2 [] = $res;
+                    }
+                }
+            }
             $filter = htmlspecialchars($_GET['filter']);
             $tabs = explode(",", $filter);
             $resultas = [];
@@ -40,8 +51,14 @@ class ContentController extends AbstractController
                     }
                 }
             }
+            function compare_objects($a, $b) {
+                return strcmp(spl_object_hash($a), spl_object_hash($b));
+            }
+            $merged = array_merge($resultas, $resultas2);
+            $unique = array_unique($merged);
+            $result = array_values($unique);
             return $this->render('front/content/index.html.twig', [
-                'contents' => $resultas,
+                'contents' => $result,
                 'imgs' => $imgs,
                 'tags' => $tagRepository->findAll()
             ]);

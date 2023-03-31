@@ -23,7 +23,9 @@
                             <div class="modal-body">
                                 <p>Type de contenus</p>
                                 <div class="tags">
-                                    <div></div>
+                                    <p onclick="changeBackgroundtype(this)">Tuto</p>
+                                    <p onclick="changeBackgroundtype(this)" >Guide</p>
+                                    <p onclick="changeBackgroundtype(this)">Article</p>
                                 </div>
                             </div>
                             <div class="modal-body">
@@ -122,17 +124,31 @@ window.addEventListener("keydown", function(event) {
        tag.style.color = "white";
        }
    }
+   function changeBackgroundtype(tag) {
+       if(tag.style.background == "green"){
+           tag.style.background = "none";
+           tag.style.color = "red";
+       }
+       else{
+           tag.style.background = "lightgreen";
+           tag.style.color = "white";
+       }
+   }
 
    function filter(){
        var greenElements = [];
+       var typeElements = [];
        var tags = document.getElementsByTagName("p");
        for (var i = 0; i < tags.length; i++) {
        var tag = tags[i];
        if (tag.style.background === "green") {
        greenElements.push(tag.textContent);
         }
+       if (tag.style.background === "lightgreen") {
+       typeElements.push(tag.textContent);
        }
-       location.replace("/content/?filter="+ greenElements +"");
+       }
+       location.replace("/content/?filter="+ greenElements +"&type="+ typeElements);
    }
 </script>
 
