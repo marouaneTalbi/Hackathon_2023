@@ -55,6 +55,7 @@ class User implements  PasswordAuthenticatedUserInterface, UserInterface
         $this->statuses = new ArrayCollection();
         $this->chats = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->statuses = new ArrayCollection();
     }
 
     public function getId(): ?int

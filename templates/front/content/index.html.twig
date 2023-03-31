@@ -1,17 +1,33 @@
-{% extends 'base_back.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
 {% block title %}Contenu{% endblock %}
 
 {% block body %}
+    <section class="global-container-responsive">
+        <div class="panel-responsive">
+            <div class="logoContainer"> 
+                <img class="imgLogo" src="{{ asset('assets/images/Logotype.svg')}}">
+            </div>
+            <div class="buttons-container"> 
+                <h1>Gestion des contenus</h1>
+                <button>Programmer une publication</button>
+                <button>Voir les inscris aux webinars</button>
+                <button>Voir les discussions</button>
+                <button>Statistiques</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
     <section class="global-container">
         <div class="panel">
-
             <header>
                 <ul>
                     <li><a href="{{ path('front_app_content') }}">Contenus généraux</a></li>
                     <li><a href="{{ path('front_app_advice') }}">Nos conseils</a></li>
                     <li><a href="{{ path('front_app_discussion') }}">Discusssions</a></li>
-
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                             <div class="header">
@@ -23,23 +39,27 @@
                             <div class="modal-body">
                                 <p>Type de contenus</p>
                                 <div class="tags">
-                                    <div></div>
+                                    <p class="red" onclick="changeBackgroundtype(this)">Tutoriels</p>
+                                    <p class="purple" onclick="changeBackgroundtype(this)" >Interviews</p>
+                                    <p class="blue" onclick="changeBackgroundtype(this)">Articles</p>
+                                    <p class="yellow" onclick="changeBackgroundtype(this)">Conseils</p>
+                                    <p class="dark-blue" onclick="changeBackgroundtype(this)">Webinars</p>
                                 </div>
                             </div>
                             <div class="modal-body">
                                 <p>Mots clefs</p>
                                 <div class="tags">
                                     {% for tag in tags %}
-                                        <p>{{tag.name}}</p>
+                                        <p onclick="changeBackground(this)">{{tag.name}}</p>
                                     {% endfor %}
                                 </div>
+
                             </div>
-                            <button class="validate">Valider</button>
+                            <button class="validate" onclick="filter();">Valider</button>
                         </div>
                     </div>
                 </ul>
                 <div class="filter" id="openButton">
-                    <p>Trier par<img id="openButton" src="{{ asset('assets/images/arrow.svg') }}" /></p>
                     <div class="logo-container" class="close">
                         <img class="logo" src="{{ asset('assets/images/filter.svg') }}" />
                     </div>
@@ -50,12 +70,42 @@
                 <div class="content-card">
                     <div class="left">
                         <div class="top">
-                            <h2>{{ content.title }}</h2>
-                            <time>{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
-                            <div class="tags">
-                                <div class="tag">Hospitalisation</div>
-                                <div class="tag">Pédiatrie</div>
-                            </div>
+                            {% if content.type == 'Article' %}
+                                <h2 style="color: #75A3E3">{{ content.title }}</h2>
+                                <time style="color: #75A3E3">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #75A3E3" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #75A3E3; border-color: #75A3E3" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Tutoriel' %}
+                                <h2 style="color: #E5786C">{{ content.title }}</h2>
+                                <time style="color: #E5786C">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #E5786C" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #E5786C; border-color: #E5786C" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Conseil' %}
+                                <h2 style="color: #FFBE1A">{{ content.title }}</h2>
+                                <time style="color: #FFBE1A">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #FFBE1A" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #FFBE1A; border-color: #FFBE1A" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if content.type == 'Webinar' %}
+                                <h2 style="color: #466288">{{ content.title }}</h2>
+                                <time style="color: #466288">{{ content.CreatedAt ? content.CreatedAt|date('Y-m-d H:i:s') : '' }}</time>
+                                <div style="color: #466288" class="tags">
+                                    {% for tag in tags %}
+                                        <div style="color: #466288; border-color: #466288" class="tag">{{tag.name}}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
                         <p>{{ content.content }}</p>
                     </div>
@@ -77,32 +127,43 @@
             </div>
         </div>
     <section>
-    <script>
-   // Sélectionnez le bouton qui ouvre la modal
-const openButton = document.getElementById("openButton");
 
-// Sélectionnez la modal
-const modal = document.getElementById("myModal");
+        <div id="overlay1" >
+            <div id="modal1" >
+                <div id="modal-content">
+                    <div class="flex_icon_button">
+                        <button class="close-icon" id="close-modal1">X</button>
+                    </div>
 
-// Sélectionnez le bouton de fermeture
-const closeButton = document.querySelector(".close");
+                    <h1 class="publicationTitle">Publication</h1>
+                    <div class="container_b">
+                        <div class="container_modal_input">
+                            <label>Nom de l'article :</label>
+                            <input class="inputModalPub" type="text" name="nom" id="nom">
+                        </div>
+                        <div class="container_modal_input">
+                            <label>Nom de l'article :</label>
+                            <input class="inputModalPub" type="text" name="nom" id="nom">
+                        </div>
 
-// Lorsque l'utilisateur clique sur le bouton d'ouverture, afficher la modal
-openButton.addEventListener("click", function() {
-  modal.style.display = "block";
-});
+                        <div class="checkbox_container">
+                            <input type="checkbox" value="Ajouter">
+                            <a>Programmer la publication</a>
+                        </div>
 
-// Lorsque l'utilisateur clique sur le bouton de fermeture, masquer la modal
-closeButton.addEventListener("click", function() {
-  modal.style.display = "none";
-});
+                        <div class="flex_modal_pub">
+                            <button class="buttonModalPub"> -> Publication </button>
+                            <button class="buttonModalPub wihte_background">Enregistrer les brouillons</button>
+                        </div>
 
-// Lorsque l'utilisateur clique en dehors de la modal, masquer la modal
-window.addEventListener("click", function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-});
+                        <div>
+                            <a class="publication_link">Revenir à l'édition</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 // Lorsque l'utilisateur appuie sur la touche "Escape", masquer la modal
 window.addEventListener("keydown", function(event) {
@@ -110,7 +171,110 @@ window.addEventListener("keydown", function(event) {
     modal.style.display = "none";
   }
 });
+   function changeBackground(tag) {
+       if(tag.style.background == "green"){
+       tag.style.background = "none";
+       tag.style.color = "red";
+       }
+       else{
+       tag.style.background = "green";
+       tag.style.color = "white";
+       }
+   }
+   function changeBackgroundtype(tag) {
+       if(tag.style.background == "green"){
+           tag.style.background = "none";
+           tag.style.color = "red";
+       }
+       else{
+           tag.style.background = "lightgreen";
+           tag.style.color = "white";
+       }
+   }
 
+   function filter(){
+       var greenElements = [];
+       var typeElements = [];
+       var tags = document.getElementsByTagName("p");
+       for (var i = 0; i < tags.length; i++) {
+       var tag = tags[i];
+       if (tag.style.background === "green") {
+       greenElements.push(tag.textContent);
+        }
+       if (tag.style.background === "lightgreen") {
+       typeElements.push(tag.textContent);
+       }
+       }
+       location.replace("/content/?filter="+ greenElements +"&type="+ typeElements);
+   }
 </script>
 
-{% endblock %}
+                    <div class="flex_modal_pub2">
+                        <button class="buttonModalPub"> -> Sauvegarder </button>
+                    </div>
+
+                    <div>
+                        <a class="publication_link">Quitter sans sauvegarder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#  <button class="modalButton" id="open-modal">open</button>
+        <button class="modalButton" style="background-color: red" id="open-modal2">open</button>
+   #}
+
+        <script>
+        /*    const overlay1 = document.getElementById('overlay1');
+            const modal1 = document.getElementById('modal1');
+            const closeModal1 = document.getElementById('close-modal');
+            document.getElementById('open-modal1').addEventListener('click', function() {
+                overlay1.style.display = 'block';
+                modal1.style.display = 'block';
+            });
+            closeModal1.addEventListener('click', function() {
+                overlay1.style.display = 'none';
+                modal1.style.display = 'none';
+            });
+
+            const overlay2 = document.getElementById('overlay2');
+            const modal2 = document.getElementById('modal2');
+            const closeModal2 = document.getElementById('close-modal2');
+            document.getElementById('open-modal2').addEventListener('click', function() {
+                overlay2.style.display = 'block';
+                modal2.style.display = 'block';
+            });
+            closeModal2.addEventListener('click', function() {
+                overlay2.style.display = 'none';
+                modal2.style.display = 'none';
+            });
+*/
+            const openButton = document.getElementById("openButton");
+
+
+            const modal = document.getElementById("myModal");
+            const closeButton = document.querySelector(".close");
+            // Lorsque l'utilisateur clique sur le bouton d'ouverture, afficher la modal
+            openButton.addEventListener("click", function() {
+                modal.style.display = "block";
+            });
+            // Lorsque l'utilisateur clique sur le bouton de fermeture, masquer la modal
+            closeButton.addEventListener("click", function() {
+                modal.style.display = "none";
+            });
+            // Lorsque l'utilisateur clique en dehors de la modal, masquer la modal
+            window.addEventListener("click", function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+            // Lorsque l'utilisateur appuie sur la touche "Escape", masquer la modal
+            window.addEventListener("keydown", function(event) {
+                if (event.key === "Escape") {
+                    modal.style.display = "none";
+                }
+            });
+        </script>
+
+        {% endblock %}
