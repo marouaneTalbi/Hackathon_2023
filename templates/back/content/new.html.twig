@@ -28,13 +28,30 @@
                 </div>
                 <div class="tool-elements" id="toolElementsRight">
                     <input type="text" id="titleContent" placeholder="titre du contenu*" style="margin-bottom: 15px;">
+                    <select value="type" id="type">
+                        <option value="Tutoriels">Tutoriels</option>
+                        <option value="Interviews">Interviews</option>
+                        <option value="Articles">Articles</option>
+                        <option value="Conseils">Conseils</option>
+                        <option value="Webinars">Webinars</option>
+                    </select>
+                    <select value="tag" id="tag">
+                        <option value="Hospitalisation">Hospitalisation</option>
+                        <option value="PÃ©diatrie">PÃ©diatrie</option>
+                        <option value="Remboursement">Remboursement</option>
+                        <option value="Travail">Travail</option>
+                        <option value="Distanciel">Distanciel</option>
+                        <option value="Cancer">Cancer</option>
+                        <option value="Asthme">Asthme</option>
+                        <option value="Handicape">Handicape</option>
+                    </select>
                     <div id="editor"></div>
                     <div id="colorPicker"></div>
                 </div>
                 <div class="tool-elements" id="toolElementsRight2" style="display: none;">
-                    <p id="videoNameText">Aucun document telechargé</p>
+                    <p id="videoNameText">Aucun document telechargï¿½</p>
                     <input type="file" id="file-input" style="display: none;">
-                    <button id="importVideoButton" onclick="downloadVideo()">Importer une vidéo</button>
+                    <button id="importVideoButton" onclick="downloadVideo()">Importer une vidï¿½o</button>
                     <button id="importVignetteButton">Importer une vignette</button>
                     <p class="text-recently" style="width: 100%;">Recemment importees: </p>
                     <div id="lastImportVideoContainer">
@@ -337,7 +354,7 @@
     }
 
     var inputFile = document.getElementById("fileInput");
-    // Une fois que l'utilisateur a sélectionné le fichier, déclencher le téléchargement
+    // Une fois que l'utilisateur a sï¿½lectionnï¿½ le fichier, dï¿½clencher le tï¿½lï¿½chargement
     const imageContainer = document.getElementById('lastImportImageContainer');
 
     inputFile.addEventListener("change", (event) => {
@@ -417,7 +434,7 @@
         });
 
         Promise.all(promises).then(() => {
-            console.log('Toutes les images ont été téléchargées.');
+            console.log('Toutes les images ont ï¿½tï¿½ tï¿½lï¿½chargï¿½es.');
         });
     }
 
@@ -425,6 +442,8 @@
         const htmlArticle = document.querySelector('.ck-editor__editable_inline');
         const stringArticle = htmlArticle.innerHTML;
         const titleContent = document.getElementById("titleContent").value;
+        const tagElement = document.getElementById('tag').value
+        const typeElement = document.getElementById('type').value
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://localhost/admin/content/new');
@@ -435,7 +454,12 @@
             }
         };
 
-        xhr.send('htmlContent=' + encodeURIComponent(stringArticle)+ '&titleContent=' + encodeURIComponent(titleContent));
+
+        
+
+        xhr.send('htmlContent=' + encodeURIComponent(stringArticle)+ '&titleContent=' + encodeURIComponent(titleContent)
+        + '&tag=' + encodeURIComponent(tagElement)
+        + '&type=' + encodeURIComponent(typeElement) );
     }
     /******************************************/
 </script>
