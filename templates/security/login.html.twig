@@ -13,9 +13,9 @@
 
     <div class="container">
         <form method="post">
-            {% if error %}
+            {# {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+            {% endif %} #}
 
             {% if app.user %}
                 <div class="mb-3">
@@ -37,7 +37,7 @@
 
 
 
-            <button class="btn btn-lg btn-primary" type="submit">
+            <button href="{{ path('front_default_index') }}" class="btn btn-lg btn-primary" type="submit">
                 Sign in
             </button>
         </form>
