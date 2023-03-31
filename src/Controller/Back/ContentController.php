@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\Content;
 use App\Entity\Media;
+use App\Entity\Tag;
 use App\Form\ContentType;
 use App\Repository\ContentRepository;
 use App\Repository\MediaRepository;
@@ -40,40 +41,17 @@ class ContentController extends AbstractController
         if(isset($_POST["htmlContent"]) && !empty($_POST["htmlContent"])) {
             $content->setCreatedAt(new \DateTimeImmutable());
             $content->setContent($_POST["htmlContent"]);
+            $content->setType($_POST['type']);
+            $tags = $_POST['tag'];
+            $my_tags = $tagRepository->findOneBy(['name'=>$tags]);
+            $content->addTag($my_tags);
             if(isset($_POST["titleContent"]) && !empty($_POST["titleContent"])){
                 $content->setTitle($_POST["titleContent"]);
             }else{
                 $content->setTitle("Article test");
             }
-            $content->setType("Type test");
             $contentRepository->save($content, true);
         }
-        // $htmlContent = $data['htmlContent'];
-
-        /*if ($form->isSubmitted() && $form->isValid()) {
-            $images = $form->get('images')->getData();
-            foreach($images as $image){
-                $fichier = $pictureService->add($image,$slugger,'images_directory');
-                $img = new Media();
-                $img->setMediaUrl($fichier);
-                $content->addMedia($img);
-                $img->setTypeMedia('Image');
-                $mediaRepository->save($img);
-            }
-
-            $videos = $form->get('videos')->getData();
-            foreach($videos as $video){
-                $fichier_2 = $pictureService->add($video,$slugger,'videos_directory');
-                $vd = new Media();
-                $vd->setMediaUrl($fichier_2);
-                $content->addMedia($vd);
-                $vd->setTypeMedia('Video');
-                $mediaRepository->save($vd);
-            }
-            $contentRepository->save($content, true);
-            return $this->redirectToRoute('back_app_content_index', [], Response::HTTP_SEE_OTHER);
-        }*/
-
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content
             //'form' => $form,
